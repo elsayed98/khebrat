@@ -288,6 +288,7 @@ if (!function_exists('fl_offer_services')) {
 }
 
 
+
 add_action('wp_ajax_handle_offer_action', 'handle_offer_action_callback');
 function handle_offer_action_callback() {
     if (!is_user_logged_in()) {
@@ -306,9 +307,29 @@ function handle_offer_action_callback() {
         wp_send_json_error(['message' => 'العرض غير موجود.']);
     }
 
-    $status = $action_type === 'accept' ? 'accepted' : 'rejected';
-    update_post_meta($offer_id, '_offer_status', $status);
 
-    $message = ($action_type === 'accept') ? 'تم قبول العرض بنجاح.' : 'تم رفض العرض بنجاح.';
+    $new_status = ($action_type == 'accept') ? 'accepted' : 'rejected';
+    update_post_meta($offer_id, '_service_offer_status', $new_status);
+
+
+    if ($action_type === 'accept') {
+        $parent_id = wp_get_post_parent_id($offer_id);
+
+        if ($parent_id) {
+            $other_offers = get_posts([
+                'post_type'      => 'service_offers',
+                'post_parent'    => $parent_id,
+                'post_status'    => 'publish',
+                'numberposts'    => -1,
+                'post__not_in'   => [$offer_id],
+            ]);
+
+            foreach ($other_offers as $other_offer) {
+                update_post_meta($other_offer->ID, '_service_offer_status', 'rejected');
+            }
+        }
+    }
+
+    $message = ($action_type === 'accept') ? 'تم قبول العرض، .' : 'تم رفض العرض بنجاح.';
     wp_send_json_success(['message' => $message]);
 }
