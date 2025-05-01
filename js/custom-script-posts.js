@@ -32,14 +32,14 @@
 		let offerID = $(this).data('id');
 		let actionType = $(this).data('action');
 	
-		let confirmTitle = (actionType === 'accept') ? 'تأكيد قبول العرض' : 'تأكيد رفض العرض';
-		let confirmContent = (actionType === 'accept') ? 'هل أنت متأكد أنك تريد قبول هذا العرض؟' : 'هل أنت متأكد أنك تريد رفض هذا العرض؟';
-		let confirmButton = (actionType === 'accept') ? 'نعم، قبول' : 'نعم، رفض';
+		let confirmTitle = (actionType == 'accept') ? 'تأكيد قبول العرض' : 'تأكيد رفض العرض';
+		let confirmContent = (actionType == 'accept') ? 'هل أنت متأكد أنك تريد قبول هذا العرض؟' : 'هل أنت متأكد أنك تريد رفض هذا العرض؟';
+		let confirmButton = (actionType == 'accept') ? 'نعم، قبول' : 'نعم، رفض';
 	
 		$.confirm({
 			title: confirmTitle,
 			content: confirmContent,
-			type: (actionType === 'accept') ? 'green' : 'red',
+			type: (actionType == 'accept') ? 'green' : 'red',
 			theme: 'light',
 			icon: 'mdi mdi-alert-outline',
 			buttons: {
@@ -53,8 +53,7 @@
 						$.post(localize_vars_frontend.freelanceAjaxurl, {
 							action: 'handle_offer_action',
 							offer_id: offerID,
-							action_type: actionType,
-							security: localize_vars_frontend.security
+							action_type: actionType
 						}).done(function (response) {
 							$('.loader-outer').hide();
 	
@@ -66,7 +65,7 @@
 								});
 	
 								$('#offer-status-' + offerID).html(
-									'<div class="alert alert-' + (actionType === 'accept' ? 'success' : 'danger') + '">' +
+									'<div class="alert alert-' + (actionType == 'accept' ? 'success' : 'danger') + '">' +
 									response.data.message +
 									'</div>'
 								);
