@@ -1,3 +1,16 @@
+<?php
+$current_user_id = get_current_user_id();
+
+$args = array(
+	'post_type'      => 'service_offers',
+	'author'         => $current_user_id,
+	'posts_per_page' => -1,
+	'post_status'    => 'publish',
+);
+
+$query = new WP_Query($args);
+?>
+
 <section class="pt-0">
 	<div class="container vstack gap-4">
 		<!-- Title START -->
@@ -22,7 +35,7 @@
 					<div class="card-header border-bottom">
 						<ul class="nav nav-pills nav-justified mb-3" id="serviceTabs">
 							<li class="nav-item">
-								<a class="nav-link mb-0 active" data-bs-toggle="tab" href="#services-list"><?php echo esc_html__('جديدة', 'khebrat_theme'); ?></a>
+								<a class="nav-link mb-0 active" data-bs-toggle="tab" href="#services-list"><?php echo esc_html__('عروضي', 'khebrat_theme'); ?></a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link mb-0 " data-bs-toggle="tab" href="#in-progress"><?php echo esc_html__('تحت التنفيذ', 'khebrat_theme'); ?></a>
@@ -38,28 +51,52 @@
 
 
 
+
+
 					<!-- Card body START -->
 					<div id="services-list" class="card-body vstack gap-3">
 						<!-- Listing item START -->
-						<div class="card border p-2">
-							<div class="row g-4">
 
+						<?php
+						if ($query->have_posts()) :
+							while ($query->have_posts()) : $query->the_post();
+								$parent_id = wp_get_post_parent_id(get_the_ID());
+								$parent_title = $parent_id ? get_the_title($parent_id) : 'لا يوجد منشور أب';
+								$parent_link  = $parent_id ? get_permalink($parent_id) : '#';
+								$offer_date = get_the_date('d M Y');
+
+
+						?>
+								<div class="list-group-item">
+									<h5 class="mb-1"><?php the_title(); ?></h5>
+									<p class="mb-0">المنشور الأب:
+										<?php if ($parent_id) : ?>
+											<a href="<?php echo esc_url($parent_link); ?>"><?php echo esc_html($parent_title); ?></a>
+										<?php else : ?>
+											<span><?php echo esc_html($parent_title); ?></span>
+										<?php endif; ?>
+									</p>
+								</div>
+
+
+								<div class="card border p-2">
+							<div class="row g-4">
 								<!-- Card body -->
 								<div class="col-md-9 col-lg-12">
 									<div class="card-body position-relative d-flex flex-column p-0 h-100">
 
 										<!-- Buttons -->
 										<div class="list-inline-item dropdown position-absolute top-0 end-0">
-											<small><?php echo esc_html__('طلب رقم : ', 'khebrat_theme'); ?>#526452</small>
+											<small><?php echo esc_html__('طلب رقم : ', 'khebrat_theme'); ?>#<?php echo esc_html($parent_id); ?></small>
 
 										</div>
 
 										<!-- Title -->
-										<h6 class="card-title mb-0 me-8">Pride moon Village Resort</h6>
-										
+										<h6 class="card-title mb-0 me-8"><?php echo esc_html__(' عرض علي : ', 'khebrat_theme'); ?><?php echo esc_html($parent_title); ?></h6>
+
 										<div class="d-flex align-items-center">
-											<span class="mb-0 me-1"><?php echo esc_html__('تاريخ الطلب : ', 'khebrat_theme'); ?></span>
-											<span class="text-span mb-0 me-1">$day</span>
+											<span class="mb-0 me-1"><?php echo esc_html__('تاريخ العرض : ', 'khebrat_theme'); ?></span>
+											<span class="text-span mb-0 me-1"><?php echo esc_html($offer_date); ?></span>
 										</div>
 										<div class="d-flex align-items-center">
 											<span class="mb-0 me-1"><?php echo esc_html__('نوع الخدمة : ', 'khebrat_theme'); ?></span>
@@ -81,13 +118,26 @@
 											<!-- Price -->
 											<div class="hstack gap-2 mt-3 mt-sm-0">
 												<a href="#" class="btn btn-sm btn-success mb-0"><?php echo esc_html__('مشاهدة العروض', 'khebrat_theme'); ?></a>
-												<a href="#" class="btn btn-sm btn-outline-success mb-0"><?php echo esc_html__('تفاصيل الطلب', 'khebrat_theme'); ?></a>
+												<a href="<?php echo esc_url($parent_link); ?>" class="btn btn-sm btn-outline-success mb-0"><?php echo esc_html__('تفاصيل الطلب', 'khebrat_theme'); ?></a>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
+
+
+
+						
+						<?php
+							endwhile;
+							wp_reset_postdata();
+						else :
+							echo '<div class="alert alert-info">لا توجد عروض حالياً.</div>';
+						endif;
+						?>
+
+						
 
 						<!-- Listing item END -->
 						<p class="text-center">جارٍ التحميل...</p>

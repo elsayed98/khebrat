@@ -64,7 +64,7 @@ if ($offer_author_id != $current_user_id) {
 */
 
 
-// النتيجة
+/*
 echo '<div class="alert alert-success">';
 echo '✅ معرف العرض: ' . esc_html($offer_id) . '<br>';
 echo '👤 مؤلف العرض: ' . esc_html($offer_author_id) . '<br>';
@@ -78,6 +78,7 @@ foreach ($child_offers as $offer) {
     echo '<p>' . esc_html(wp_trim_words($offer->post_content, 20)) . '</p>';
     echo '<hr>';
 }
+*/
 ?>
 
 <div class="vstack gap-4">
