@@ -6,17 +6,18 @@ function enqueue_theme_styles()
     // Google Fonts
 
     // Plugins CSS
-    wp_enqueue_style('font-awesome', TEMPLATE_THEME_DIR . '/assets/vendor/font-awesome/css/all.min.css', array(), '6.0.0'); // استبدل بالنسخة الصحيحة
-    wp_enqueue_style('bootstrap-icons', TEMPLATE_THEME_DIR . '/assets/vendor/bootstrap-icons/bootstrap-icons.css', array(), '1.0.0'); // استبدل بالنسخة الصحيحة
-    wp_enqueue_style('tiny-slider', TEMPLATE_THEME_DIR . '/assets/vendor/tiny-slider/tiny-slider.css', array(), '1.0.0'); // استبدل بالنسخة الصحيحة
-    wp_enqueue_style('glightbox', TEMPLATE_THEME_DIR . '/assets/vendor/glightbox/css/glightbox.css', array(), '1.0.0'); // استبدل بالنسخة الصحيحة
-    wp_enqueue_style('flatpickr', TEMPLATE_THEME_DIR . '/assets/vendor/flatpickr/css/flatpickr.min.css', array(), '1.0.0'); // استبدل بالنسخة الصحيحة
-    wp_enqueue_style('dropzone', TEMPLATE_THEME_DIR . '/assets/vendor/dropzone/css/dropzone.css', array(), '1.0.0'); // استبدل بالنسخة الصحيحة
-    wp_enqueue_style('choices', TEMPLATE_THEME_DIR . '/assets/vendor/choices/css/choices.min.css', array(), '1.0.0'); // استبدل بالنسخة الصحيحة
-    wp_enqueue_style('aos', TEMPLATE_THEME_DIR . '/assets/vendor/aos/aos.css', array(), '1.0.0'); // استبدل بالنسخة الصحيحة
-    wp_enqueue_style('overlay-scrollbar', TEMPLATE_THEME_DIR . '/assets/vendor/overlay-scrollbar/css/overlayscrollbars.min.css', array(), '1.0.0'); // استبدل بالنسخة الصحيحة
-    wp_enqueue_style('apexcharts', TEMPLATE_THEME_DIR . '/assets/vendor/apexcharts/css/apexcharts.css', array(), '1.0.0'); // استبدل بالنسخة الصحيحة
-    wp_enqueue_style('bs-stepper', TEMPLATE_THEME_DIR . '/assets/vendor/stepper/css/bs-stepper.min.css', array(), '1.0.0'); // استبدل بالنسخة الصحيحة
+    wp_enqueue_style('font-awesome', TEMPLATE_THEME_DIR . '/assets/vendor/font-awesome/css/all.min.css', array(), '6.0.0'); 
+    wp_enqueue_style('bootstrap-icons', TEMPLATE_THEME_DIR . '/assets/vendor/bootstrap-icons/bootstrap-icons.css', array(), '1.0.0'); 
+    wp_enqueue_style('tiny-slider', TEMPLATE_THEME_DIR . '/assets/vendor/tiny-slider/tiny-slider.css', array(), '1.0.0'); 
+    wp_enqueue_style('glightbox', TEMPLATE_THEME_DIR . '/assets/vendor/glightbox/css/glightbox.css', array(), '1.0.0'); 
+    wp_enqueue_style('flatpickr', TEMPLATE_THEME_DIR . '/assets/vendor/flatpickr/css/flatpickr.min.css', array(), '1.0.0'); 
+    wp_enqueue_style('dropzone', TEMPLATE_THEME_DIR . '/assets/vendor/dropzone/css/dropzone.css', array(), '1.0.0'); 
+    wp_enqueue_style('choices', TEMPLATE_THEME_DIR . '/assets/vendor/choices/css/choices.min.css', array(), '1.0.0'); 
+    wp_enqueue_style('aos', TEMPLATE_THEME_DIR . '/assets/vendor/aos/aos.css', array(), '1.0.0'); 
+    wp_enqueue_style('fontello', TEMPLATE_THEME_DIR . '/css/fontello.css', array(), '1.0.0'); 
+    wp_enqueue_style('overlay-scrollbar', TEMPLATE_THEME_DIR . '/assets/vendor/overlay-scrollbar/css/overlayscrollbars.min.css', array(), '1.0.0'); 
+    wp_enqueue_style('apexcharts', TEMPLATE_THEME_DIR . '/assets/vendor/apexcharts/css/apexcharts.css', array(), '1.0.0'); 
+    wp_enqueue_style('bs-stepper', TEMPLATE_THEME_DIR . '/assets/vendor/stepper/css/bs-stepper.min.css', array(), '1.0.0'); 
 
     // Theme CSS
     wp_enqueue_style('theme-style', TEMPLATE_THEME_DIR . '/assets/css/style-rtl.css', array(), '1.0.0');

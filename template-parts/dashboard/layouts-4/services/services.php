@@ -64,6 +64,9 @@ $query = new WP_Query($args);
 								$parent_title = $parent_id ? get_the_title($parent_id) : 'لا يوجد منشور أب';
 								$parent_link  = $parent_id ? get_permalink($parent_id) : '#';
 								$offer_date = get_the_date('d M Y');
+								$offer_price = get_post_meta(get_the_ID(), '_service_offer_price', true);
+								$service_type_id = get_post_meta($parent_id, '_service_type', true);
+								$service_type = $parent_id ? get_the_title($service_type_id) : 'لا يوجد ';
 
 
 						?>
@@ -100,11 +103,25 @@ $query = new WP_Query($args);
 										</div>
 										<div class="d-flex align-items-center">
 											<span class="mb-0 me-1"><?php echo esc_html__('نوع الخدمة : ', 'khebrat_theme'); ?></span>
-											<span class="text-span mb-0 me-1">$day</span>
+											<span class="text-span mb-0 me-1"><?php echo esc_html($service_type); ?></span>
 										</div>
 										<div class="d-flex align-items-center">
 											<span class="mb-0 me-1"><?php echo esc_html__('التخصص : ', 'khebrat_theme'); ?></span>
-											<span class="text-span mb-0 me-1">$day</span>
+											<?php
+                                                $terms = wp_get_object_terms($parent_id, 'legal_category');
+                                                if (!empty($terms) && !is_wp_error($terms)) {
+                                                    $term_names = wp_list_pluck($terms, 'name');
+                                                    echo '<span class="text-span mb-0 me-1">' . implode('، ', $term_names) . '</span>';
+                                                } else {
+                                                    echo '<span class="text-span mb-0 me-1">' . esc_html('غير محدد') . '</span>';
+                                                }
+                                                ?>
+										</div>
+
+										<div class="d-flex align-items-center">
+											<span class="mb-0 me-1"><?php echo esc_html__('قيمة العرض : ', 'khebrat_theme'); ?></span>
+											<span class="text-span mb-0 me-1"><i class="icon-Saudi_Riyal_Symbol-2"></i><?php echo esc_html($offer_price); ?></span>
+											
 										</div>
 
 
