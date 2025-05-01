@@ -1,53 +1,46 @@
 <?php
 
 if (in_array('khebrat-framework/index.php', apply_filters('active_plugins', get_option('active_plugins')))) {
-    get_template_part('header');
-		$ID = get_the_ID();
-		$profile_imageURL = get_template_directory_uri() . '/images/emp_default.jpg';
-		$profile_pic_id 	= get_post_meta($ID, '_lawyer_banner_id', true) ?? 0;
-		$term_output 			= "بيانات سرية";
-		$PDF_ID 					= get_post_meta($ID, '_license_attached_pdf', true) ?? "no";
-		$PDF_URL 					= wp_get_attachment_url($PDF_ID);
-		if($profile_pic_id){
-			$ImageURL 	= wp_get_attachment_image_url($profile_pic_id); 
-			$profile_imageURL = $ImageURL;
-		}
-		$author_id 	= get_post_field('post_author', get_the_ID());
-		$user_info = get_userdata($author_id) ?? NULL;
+	get_template_part('header');
 
-		$terms = wp_get_object_terms($ID, 'customer-locations');
-		if (!empty($terms) && !is_wp_error($terms)) {
-				$term_output = [];
-		
-				foreach ($terms as $term) {
-						$term_name = $term->name;
-		
-						if ($term->parent) {
-								$parent_term = get_term($term->parent, 'customer-locations');
-								if ($parent_term && !is_wp_error($parent_term)) {
-										$term_name = $parent_term->name . ' - ' . $term_name;
-								}
-						}
-		
-						$term_output[] = $term_name ?? "no-data";
+	$ID = get_the_ID();
+	$profile_pic_id 	= get_post_meta($ID, '_lawyer_banner_id', true) ?? 0;
+	$author_id 	= get_post_field('post_author', get_the_ID());
+
+	//$lawyer_id = get_user_meta($author_id, 'lawyer_id', true);
+	$profile_image = get_profile_img($ID, "lawyer", "avatar-img rounded-circle");
+	$gender = get_post_meta(get_the_ID(), '_lawyer_gender', true);
+
+
+	$term_output 			= "بيانات سرية";
+	$PDF_ID 					= get_post_meta($ID, '_license_attached_pdf', true) ?? "no";
+	$PDF_URL 					= wp_get_attachment_url($PDF_ID);
+
+
+	$user_info = get_userdata($author_id) ?? NULL;
+
+	$terms = wp_get_object_terms($ID, 'customer-locations');
+	if (!empty($terms) && !is_wp_error($terms)) {
+		$term_output = [];
+
+		foreach ($terms as $term) {
+			$term_name = $term->name;
+
+			if ($term->parent) {
+				$parent_term = get_term($term->parent, 'customer-locations');
+				if ($parent_term && !is_wp_error($parent_term)) {
+					$term_name = $parent_term->name . ' - ' . $term_name;
 				}
-		
-
-		} 
-
-
-		// echo "<pre class='preClass'>";
-		// 	echo $PDF_URL;
-		// echo "</pre>";
-    ?>
-		<style>
-			.preClass{
-				background: #f7f7f7;
-				color: black;
-				padding: 20px 30px;
 			}
-		</style>
-    <div class="row g-4 mb-5">
+
+			$term_output[] = $term_name ?? "no-data";
+		}
+	}
+
+?>
+	<section class="pt-3">
+		<div class="container">
+			<div class="row g-4 mb-5">
 				<!-- Agent info START -->
 				<div class="col-md-4 col-xxl-3">
 					<div class="card bg-light">
@@ -56,7 +49,7 @@ if (in_array('khebrat-framework/index.php', apply_filters('active_plugins', get_
 						<div class="card-body text-center">
 							<!-- Avatar Image -->
 							<div class="avatar avatar-xl flex-shrink-0 mb-3">
-								<img class="avatar-img rounded-circle" src="<?php echo $profile_imageURL ?>" alt="avatar">
+								<?php echo wp_return_echo($profile_image); ?>
 							</div>
 							<!-- Title -->
 							<h5 class="mb-2"><?php echo get_post_meta($ID, '_lawyer_full_name', true) ?></h5>
@@ -88,7 +81,7 @@ if (in_array('khebrat-framework/index.php', apply_filters('active_plugins', get_
 								<div class="icon-md bg-mode h6 mb-0 rounded-circle flex-shrink-0"><i class="bi bi-geo-alt-fill"></i></div>
 								<div class="ms-2">
 									<small>العنوان</small>
-									<h6 class="fw-normal small mb-0"><?php echo (! empty($term_output) && is_array($term_output)) ? implode('، ', $term_output) : "بيانات سرية";?></h6>
+									<h6 class="fw-normal small mb-0"><?php echo (! empty($term_output) && is_array($term_output)) ? implode('، ', $term_output) : "بيانات سرية"; ?></h6>
 
 								</div>
 							</div>
@@ -117,9 +110,9 @@ if (in_array('khebrat-framework/index.php', apply_filters('active_plugins', get_
 											<span>الاسم بالكامل</span>
 											<span class="h6 fw-normal ms-1 mb-0"><?php echo get_post_meta($ID, '_lawyer_full_name', true) ?></span>
 										</li>
-	
 
-	
+
+
 										<li class="list-group-item mb-3">
 											<span>رقم الهاتف</span>
 											<span class="h6 fw-normal ms-1 mb-0"><?php echo get_post_meta($ID, '_lawyer_contact_number', true) ?></span>
@@ -133,7 +126,7 @@ if (in_array('khebrat-framework/index.php', apply_filters('active_plugins', get_
 
 									</ul>
 								</div>
-	
+
 								<!-- Information item -->
 								<div class="col-md-6">
 									<ul class="list-group list-group-borderless">
@@ -143,28 +136,34 @@ if (in_array('khebrat-framework/index.php', apply_filters('active_plugins', get_
 										</li>
 
 										<li class="list-group-item mb-3">
-											<span>الجنسة:</span>
-											<span class="h6 fw-normal ms-1 mb-0"><?php echo   get_post_meta($ID, '_lawyer_gender', true) ?   "ذكر" :  "انثي" ?></span>
+											<span>الجنس:</span>
+											<?php 
+											if ($gender == '0') {
+												echo '<span class="h6 fw-normal ms-1 mb-0"><i class="bi bi-gender-male me-1"></i>ذكر</span>';
+											} elseif ($gender == '1') {
+												echo '<span class="h6 fw-normal ms-1 mb-0"><i class="bi bi-gender-female me-1"></i>أنثى</span>';
+											}
+											?>
 										</li>
-	
+
 										<li class="list-group-item mb-3">
 											<span>الموقع :</span>
-											<span class="h6 fw-normal ms-1 mb-0"><?php echo (! empty($term_output) && is_array($term_output)) ? implode('، ', $term_output) : "بيانات سرية";?></span> 
+											<span class="h6 fw-normal ms-1 mb-0"><?php echo (! empty($term_output) && is_array($term_output)) ? implode('، ', $term_output) : "بيانات سرية"; ?></span>
 										</li>
-	
+
 										<li class="list-group-item mb-3">
 											<span> عضو منذ :</span>
 											<span class="h6 fw-normal ms-1 mb-0"><?php echo khebrat_time_since($ID) ?></span>
 										</li>
 									</ul>
 								</div>
-	
+
 								<!-- Information item -->
 								<div class="col-12">
 									<ul class="list-group list-group-borderless">
 										<li class="list-group-item">
 											<span>وصف: </span>
-											<p class="h6 fw-normal mb-0">As it so contrasted oh estimating instrument. Size-like body someone had. Are conduct viewing boy minutes warrant the expense Tolerably behavior may admit daughters offending her ask own? Praise effect wishes to change way and any wanted. Lively use looked latter regard had. Does he it part last in</p>
+											<p class="h6 fw-normal mb-0">لا يوجد</p>
 										</li>
 									</ul>
 								</div>
@@ -179,26 +178,27 @@ if (in_array('khebrat-framework/index.php', apply_filters('active_plugins', get_
 					<!-- Personal info END -->
 				</div>
 			</div> <!-- Row END -->
+		</div>
+	</section>
 
-
-    <?php
+<?php
 
 } else {
-    wp_redirect(home_url());
+	wp_redirect(home_url());
 }
 if (isset($khebrat_theme_options['footer_type'])) {
-    $footer_type  = $khebrat_theme_options['footer_type'];
+	$footer_type  = $khebrat_theme_options['footer_type'];
 } else {
-    $footer_type  = 0;
+	$footer_type  = 0;
 }
 if ($footer_type  ==  1) {
-    if ($footer_type  ==  1 && in_array('elementor-pro/elementor-pro.php', apply_filters('active_plugins', get_option('active_plugins')))) {
-        elementor_theme_do_location('footer');
-        get_footer();
-    } else {
-        get_footer();
-    }
+	if ($footer_type  ==  1 && in_array('elementor-pro/elementor-pro.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+		elementor_theme_do_location('footer');
+		get_footer();
+	} else {
+		get_footer();
+	}
 } else {
-    get_template_part('footer');
+	get_template_part('footer');
 }
 ?>
