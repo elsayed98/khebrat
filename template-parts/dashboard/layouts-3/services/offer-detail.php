@@ -8,6 +8,7 @@ if (!isset($_GET['offer_id']) || !is_numeric($_GET['offer_id'])) {
 
 $offer_id = intval($_GET['offer_id']);
 $offer_post = get_post($offer_id);
+$status = get_post_meta($offer_id, '_service_offer_status', true);
 
 $offer_author_id = $offer_post->post_author;
 $lawyer_id = get_user_meta($offer_author_id, 'lawyer_id', true);
@@ -108,7 +109,7 @@ echo '</div>';
                         <!-- Review item START -->
                         <div class="d-sm-flex justify-content-between">
                             <!-- Avatar image -->
-                            <div class="d-sm-flex align-items-center mb-3"> 
+                            <div class="d-sm-flex align-items-center mb-3">
                                 <?php echo get_profile_img($lawyer_id, "lawyer", "avatar avatar-md rounded-circle float-start me-3"); ?>
                                 <!-- Title -->
                                 <div>
@@ -137,10 +138,24 @@ echo '</div>';
                         <h6 class="fw-normal"><?php echo esc_html__('تفاصيل العرض : ', 'khebrat_theme'); ?></h6>
                         <?php echo apply_filters('the_content', $offer_post->post_content); ?>
 
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button class="btn btn-success me-md-2" type="button"><?php echo esc_html__('قبول العرض', 'khebrat_theme'); ?></button>
-                            <button class="btn btn-danger-soft" type="button"><?php echo esc_html__('رفض العرض', 'khebrat_theme'); ?></button>
+                        <div class="status-output mb-2" id="offer-status-<?php echo $offer_id; ?>">
+                            <?php if ($status == 'accepted'): ?>
+                                <div class="alert alert-success">تم قبول هذا العرض</div>
+                            <?php elseif ($status == 'rejected'): ?>
+                                <div class="alert alert-danger">تم رفض هذا العرض</div>
+                            <?php endif; ?>
                         </div>
+
+                        <?php if ($status == 'active'): ?>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button class="btn btn-success me-md-2 btn-offer-action"
+                                    data-id="<?php echo $offer_id; ?>"
+                                    data-action="accept"><?php echo esc_html__('قبول العرض', 'khebrat_theme'); ?></button>
+                                <button class="btn btn-danger-soft btn-offer-action"
+                                    data-id="<?php echo $offer_id; ?>"
+                                    data-action="reject"><?php echo esc_html__('رفض العرض', 'khebrat_theme'); ?></button>
+                            </div>
+                        <?php endif; ?>
                     </div>
 
                 </div>

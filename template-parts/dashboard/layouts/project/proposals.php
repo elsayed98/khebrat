@@ -6,7 +6,7 @@ $limit = get_option( 'posts_per_page' );
 $start_from ='1';
 if (isset($_GET["pageno"])) 
 {  
-  $pageno  = $_GET["pageno"];  
+  $pageno  = $_GET["pageno"];   
 }  
 else {  
   $pageno=1;  
