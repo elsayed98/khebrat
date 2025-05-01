@@ -1,0 +1,11 @@
+<?php
+global $khebrat_theme_options;
+if(isset($khebrat_theme_options['detail_page_ad_2']) && $khebrat_theme_options['detail_page_ad_2'] != '')
+{
+	?>
+	<div class="fl-advert-box">
+      <?php echo wp_return_echo($khebrat_theme_options['detail_page_ad_2']); ?>
+	</div>
+	<?php
+}
+?>
