@@ -108,7 +108,7 @@ echo '</div>';
                         <!-- Review item START -->
                         <div class="d-sm-flex justify-content-between">
                             <!-- Avatar image -->
-                            <div class="d-sm-flex align-items-center mb-3">
+                            <div class="d-sm-flex align-items-center mb-3"> 
                                 <?php echo get_profile_img($lawyer_id, "lawyer", "avatar avatar-md rounded-circle float-start me-3"); ?>
                                 <!-- Title -->
                                 <div>
@@ -134,7 +134,7 @@ echo '</div>';
                         </div>
 
                         <!-- Content -->
-                        <h6 class="fw-normal"><?php echo esc_html__('تفاصيل العرض : ', 'khebrat_theme'); ?></h6>
+                        <h6 class="fw-normal"><?php echo esc_html__('تفاصيل العرض : ', 'khebrat_theme'); ?></h6>a7a
                         <?php echo apply_filters('the_content', $offer_post->post_content); ?>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
