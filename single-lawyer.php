@@ -4,16 +4,16 @@ if (in_array('khebrat-framework/index.php', apply_filters('active_plugins', get_
     get_template_part('header');
 		$ID = get_the_ID();
 		$profile_imageURL = get_template_directory_uri() . '/images/emp_default.jpg';
-		$profile_pic_id 	= get_post_meta($ID, '_lawyer_banner_id', true);
+		$profile_pic_id 	= get_post_meta($ID, '_lawyer_banner_id', true) ?? 0;
 		$term_output 			= "بيانات سرية";
-		$PDF_ID 					= get_post_meta($ID, '_license_attached_pdf', true);
+		$PDF_ID 					= get_post_meta($ID, '_license_attached_pdf', true) ?? "no";
 		$PDF_URL 					= wp_get_attachment_url($PDF_ID);
 		if($profile_pic_id){
 			$ImageURL 	= wp_get_attachment_image_url($profile_pic_id); 
 			$profile_imageURL = $ImageURL;
 		}
 		$author_id 	= get_post_field('post_author', get_the_ID());
-		$user_info = get_userdata($author_id);
+		$user_info = get_userdata($author_id) ?? NULL;
 
 		$terms = wp_get_object_terms($ID, 'customer-locations');
 		if (!empty($terms) && !is_wp_error($terms)) {
@@ -29,7 +29,7 @@ if (in_array('khebrat-framework/index.php', apply_filters('active_plugins', get_
 								}
 						}
 		
-						$term_output[] = $term_name;
+						$term_output[] = $term_name ?? "no-data";
 				}
 		
 
@@ -88,7 +88,8 @@ if (in_array('khebrat-framework/index.php', apply_filters('active_plugins', get_
 								<div class="icon-md bg-mode h6 mb-0 rounded-circle flex-shrink-0"><i class="bi bi-geo-alt-fill"></i></div>
 								<div class="ms-2">
 									<small>العنوان</small>
-									<h6 class="fw-normal small mb-0"><?php echo implode('، ', $term_output) ?></h6>
+									<h6 class="fw-normal small mb-0"><?php echo (! empty($term_output) && is_array($term_output)) ? implode('، ', $term_output) : "بيانات سرية";?></h6>
+
 								</div>
 							</div>
 
@@ -148,7 +149,7 @@ if (in_array('khebrat-framework/index.php', apply_filters('active_plugins', get_
 	
 										<li class="list-group-item mb-3">
 											<span>الموقع :</span>
-											<span class="h6 fw-normal ms-1 mb-0"><?php echo implode('، ', $term_output) ?></span>
+											<span class="h6 fw-normal ms-1 mb-0"><?php echo (! empty($term_output) && is_array($term_output)) ? implode('، ', $term_output) : "بيانات سرية";?></span> 
 										</li>
 	
 										<li class="list-group-item mb-3">
