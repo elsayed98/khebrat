@@ -134,7 +134,7 @@ echo '</div>';
                         </div>
 
                         <!-- Content -->
-                        <h6 class="fw-normal"><?php echo esc_html__('تفاصيل العرض : ', 'khebrat_theme'); ?></h6>a7a
+                        <h6 class="fw-normal"><?php echo esc_html__('تفاصيل العرض : ', 'khebrat_theme'); ?></h6>
                         <?php echo apply_filters('the_content', $offer_post->post_content); ?>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
