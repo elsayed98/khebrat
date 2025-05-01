@@ -18,6 +18,14 @@ $service_id = wp_get_post_parent_id($offer_id);
 
 $parent_author_id = get_post_field('post_author', $service_id);
 
+$child_offers = get_posts([
+    'post_type'   => 'service_offers',         // ← نوع المنشور: غيّره حسب اسم post type الفعلي للعروض
+    'post_parent' => $service_id,      // ← ID منشور الخدمة (الأب)
+    'post_status' => 'publish',       // ← فقط المنشورات المنشورة
+    'post__not_in'   => [$offer_id],
+    'numberposts' => -1               // ← جلب جميع العروض دون حد أقصى
+]);
+
 
 
 $service_type_id = get_post_meta($service_id, '_service_type', true);
@@ -64,6 +72,12 @@ echo '📄 معرف الخدمة الأصلية: ' . esc_html($service_id) . '<b
 echo '👤 مؤلف الخدمة الأصلية: ' . esc_html($parent_author_id);
 echo '</div>';
 
+foreach ($child_offers as $offer) {
+    echo '<h4>' . esc_html(get_the_title($offer)) . '</h4>';
+    echo '<h4>' . esc_html(get_post_meta($offer->ID, '_service_offer_status', true)) . '</h4>';
+    echo '<p>' . esc_html(wp_trim_words($offer->post_content, 20)) . '</p>';
+    echo '<hr>';
+}
 ?>
 
 <div class="vstack gap-4">
