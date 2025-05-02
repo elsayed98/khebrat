@@ -6,9 +6,9 @@ if (!isset($_GET['offer_id']) || !is_numeric($_GET['offer_id'])) {
     exit;
 }
 
-$offer_id = intval($_GET['offer_id']);
+$offer_id   = intval($_GET['offer_id']);
 $offer_post = get_post($offer_id);
-$status = get_post_meta($offer_id, '_service_offer_status', true);
+$status     = get_post_meta($offer_id, '_service_offer_status', true);
 
 $offer_author_id = $offer_post->post_author;
 $lawyer_id = get_user_meta($offer_author_id, 'lawyer_id', true);

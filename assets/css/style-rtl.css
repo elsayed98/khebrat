@@ -4,6 +4,10 @@
  * Copyright 2011-2023 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+
+
+  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
+
 :root,
 [data-bs-theme=light] {
   --bs-blue: #1d3b53;
@@ -22402,3 +22406,4 @@ html[dir=rtl] .choices__input {
   font-size: 18px;
   text-align: center;
 }
+

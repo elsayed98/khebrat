@@ -8,7 +8,12 @@
  *
  * @package Exertio
  */
+
+
+    // hatem_debug(Hatem_get_post_withFilds());
 ?>
+
+
 <?php get_header(); ?>
 <?php
 if (have_posts()) {
@@ -129,6 +134,12 @@ if (have_posts()) {
                             </div>
                         </div>
                     </div>
+
+
+
+
+
+
                 </div>
             </div> <!-- Row END -->
         </div>
@@ -238,11 +249,89 @@ if (have_posts()) {
                     <div class="card card-body shadow rounded-3">
                         <div class="d-flex align-items-center">
                             <!-- Icon -->
-                            <div class="icon-lg bg-primary bg-opacity-10 rounded-circle text-primary"><i class="fas fa-business-time"></i></div>
+                            <div class="icon-lg  bg-opacity-10 rounded-circle text-primary"><i class="fas fa-business-time"></i></div>
                             <div class="ms-3">
-                                <h5 class="mb-0"><a href="#" class="stretched-link">دارسة قضاية</a></h5>
-                                <p></p>
+                                <h5 class="mb-0"><a  href="<?php echo get_page_link(31) ?>" class="stretched-link">دارسة قضاية</a></h5>
+                                <p class="small">اذا كان موضعك يحتوي علي الكثير من التفاصيل و العقود و المرفقات و صكوك الاحكام المطلوب دراستها للوصول للاجابات التي تحتاجها. و تحتاج اجابات دقيقة بخصوص موضوعك.</p>
                                 <span>تبدا من 500 ر.س</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-4 col-xl-3">
+                    <div class="card card-body shadow rounded-3">
+                        <div class="d-flex align-items-center">
+                            <!-- Icon -->
+                            <div class="icon-lg  bg-opacity-10 rounded-circle text-primary"><i class="fas fa-business-time"></i></div>
+                            <div class="ms-3">
+                                <h5 class="mb-0"><a  href="<?php echo get_page_link(80) ?>" class="stretched-link">حضور الجلسات </a></h5>
+                                <p class="small">اذا كنت مشغول, حصل لك ظرف او ما عندك رغبة تحضر الجلسة لاي سبب كان. وكل محامي/ة يحضر  الجلسة عندك</p>
+                                <span>تبدا من 500  <?php echo do_shortcode( '[hatem_sar_sb]' ) ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-4 col-xl-3">
+                    <div class="card card-body shadow rounded-3">
+                        <div class="d-flex align-items-center">
+                            <!-- Icon -->
+                            <div class="icon-lg  bg-opacity-10 rounded-circle text-primary"><i class="fas fa-business-time"></i></div>
+                            <div class="ms-3">
+                                <h5 class="mb-0"><a  href="<?php echo get_page_link(82) ?>" class="stretched-link">كتابات قانوية</a></h5>
+                                <p class="small">صياغة اللوائح و المذكرات الجوابية الاعتراضية وصحائف الدعوي و النقض الاتماس و غيرها من الخطابات بطريقة قانونية سليمة</p>
+                                <span>تبدا من 500  <?php echo do_shortcode( '[hatem_sar_sb]' ) ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-4 col-xl-3">
+                    <div class="card card-body shadow rounded-3">
+                        <div class="d-flex align-items-center">
+                            <!-- Icon -->
+                            <div class="icon-lg  bg-opacity-10 rounded-circle text-primary"><i class="fas fa-business-time"></i></div>
+                            <div class="ms-3">
+                                <h5 class="mb-0"><a  href="<?php echo get_page_link(84) ?>" class="stretched-link">طلبات التنفيذ</a></h5>
+                                <p class="small">رفع طلب التنفيذ و/ أو متابعة الاجراءات حتي اخر اجراء صد المنفذ ضده امام محكمة التنفيذ</p>
+                                <span>تبدا من 500  <?php echo do_shortcode( '[hatem_sar_sb]' ) ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-4 col-xl-3">
+                    <div class="card card-body shadow rounded-3">
+                        <div class="d-flex align-items-center">
+                            <!-- Icon -->
+                            <div class="icon-lg  bg-opacity-10 rounded-circle text-primary"><i class="fas fa-business-time"></i></div>
+                            <div class="ms-3">
+                                <h5 class="mb-0"><a  href="<?php echo get_page_link(87) ?>" class="stretched-link">العقود و الاتفاقات</a></h5>
+                                <p class="small">العقد شريعة المتعاقدين , صياغة و مراجعة العقود و الاتفاقيات و دراسة العقود و البحث في امكانية فسخها</p>
+                                <span>تبدا من 500  <?php echo do_shortcode( '[hatem_sar_sb]' ) ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-4 col-xl-3">
+                    <div class="card card-body shadow rounded-3">
+                        <div class="d-flex align-items-center">
+                            <!-- Icon -->
+                            <div class="icon-lg  bg-opacity-10 rounded-circle text-primary"><i class="fas fa-business-time"></i></div>
+                            <div class="ms-3">
+                                <h5 class="mb-0"><a  href="<?php echo get_page_link(89) ?>" class="stretched-link">تسجيل العلامات التجارية</a></h5>
+                                <p class="small">تقديم طلب تسجيل علامة تجارية للهئية السعودية للملكية الفكرية و متابعة الطلب حتي يتم النشر</p>
+                                <span>تبدا من 500  <?php echo do_shortcode( '[hatem_sar_sb]' ) ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-4 col-xl-3">
+                    <div class="card card-body shadow rounded-3">
+                        <div class="d-flex align-items-center">
+                            <!-- Icon -->
+                            <div class="icon-lg  bg-opacity-10 rounded-circle text-primary"><i class="fas fa-business-time"></i></div>
+                            <div class="ms-3">
+                                <h5 class="mb-0"><a  href="<?php echo get_page_link(93) ?>" class="stretched-link">خدمات اخري</a></h5>
+                                <p class="small">اي خدمات قانوية اخري ترغب في توكيلها للمحامي او الحصول عليها من محامي, قم بطرح موضوعك هنا و حدد نوع الخدمة المطلوبة </p>
+                                <span>تبدا من 500  <?php echo do_shortcode( '[hatem_sar_sb]' ) ?></span>
                             </div>
                         </div>
                     </div>

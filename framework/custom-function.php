@@ -261,7 +261,7 @@ if (!function_exists('fl_offer_services')) {
             'post_content'  => $offer_details,
             'post_status'   => 'publish',
             'post_author'   => $current_user_id,
-            'post_type'     => 'service_offers', // تأكد أن هذا post type موجود
+            'post_type'     => '', // تأكد أن هذا post type موجود
             'post_parent'   => $service_id,
         );
 

@@ -11,6 +11,7 @@ function khebrat_theme_setup() {
 	define('TEMPLATE_THEME_PATH', get_template_directory());
 	define('CHILD_THEME_PATH', get_stylesheet_directory());
 	define('ASSETS_DIR', TEMPLATE_THEME_DIR . '/assets');
+	define('THEME_INC', get_template_directory() . '/inc');
 
  	/* Theme Utilities */
 	require trailingslashit(get_template_directory()) . 'inc/utilities.php';
@@ -22,6 +23,7 @@ function khebrat_theme_setup() {
     require trailingslashit(get_template_directory()) . "inc/shop-func.php";
 	require trailingslashit(get_template_directory()) . 'framework/theme-enqueue.php';
 	require trailingslashit(get_template_directory()) . 'framework/custom-function.php';
+	require THEME_INC . '/helpers.php';
 	include('inc/bootstrap-walker.php');
 
 	
