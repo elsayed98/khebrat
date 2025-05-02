@@ -313,7 +313,7 @@ if (in_array('redux-framework/redux-framework.php', apply_filters('active_plugin
 
 											<div>
 												<h6 class="mb-0"><?php echo esc_html($user_name) . $active_profile . $active_user; ?></h6>
-												<a href="<?php echo get_page_link(9) ?>" class="small m-0"><?php echo wp_get_current_user()->user_email ?></a>
+												<a href="<?php esc_attr(get_permalink($khebrat_theme_options['user_dashboard_page'])) ?>" class="small m-0"><?php echo wp_get_current_user()->user_email ?></a>
 											</div>
 										</div>
 									</li>
@@ -322,10 +322,10 @@ if (in_array('redux-framework/redux-framework.php', apply_filters('active_plugin
 									<li>
 										<hr class="dropdown-divider">
 									</li>
-									<li><a class="dropdown-item" href="<?php echo get_page_link(9) ?>"><i class="bi bi-house fa-fw me-2"></i>لوحة تحكم</a></li>
-									<li><a class="dropdown-item" href="<?php echo get_page_link(9) . '?ext=services' ?>"><i class="bi bi-person-gear fa-fw me-2"></i>خدماتي</a></li>
-									<li><a class="dropdown-item" href="<?php echo get_page_link(9) . '?ext=profile' ?>"><i class="bi bi-gear fa-fw me-2"></i>الاعدادات</a></li>
-									<li><a class="dropdown-item" href="<?php echo get_page_link(9) . '?ext=profile' ?>"><i class="bi bi-person-video2 fa-fw me-2"></i>جلساتي</a></li>
+									<li><a class="dropdown-item" href="<?php esc_attr(get_permalink($khebrat_theme_options['user_dashboard_page'])) ?>"><i class="bi bi-house fa-fw me-2"></i>لوحة تحكم</a></li>
+									<li><a class="dropdown-item" href="<?php esc_attr(get_permalink($khebrat_theme_options['user_dashboard_page'])) . '?ext=services' ?>"><i class="bi bi-person-gear fa-fw me-2"></i>خدماتي</a></li>
+									<li><a class="dropdown-item" href="<?php esc_attr(get_permalink($khebrat_theme_options['user_dashboard_page'])) . '?ext=profile' ?>"><i class="bi bi-gear fa-fw me-2"></i>الاعدادات</a></li>
+									<li><a class="dropdown-item" href="<?php esc_attr(get_permalink($khebrat_theme_options['user_dashboard_page'])) . '?ext=profile' ?>"><i class="bi bi-person-video2 fa-fw me-2"></i>جلساتي</a></li>
 									<li><a class="dropdown-item bg-danger-soft-hover" href="<?php echo wp_logout_url(get_the_permalink(fl_framework_get_options('login_page'))); ?>"><i class="bi bi-power fa-fw me-2"></i>Sign Out</a></li>
 									<li>
 										<hr class="dropdown-divider">
