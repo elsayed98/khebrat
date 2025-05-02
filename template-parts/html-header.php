@@ -308,7 +308,7 @@ if (in_array('redux-framework/redux-framework.php', apply_filters('active_plugin
 										<div class="d-flex align-items-center">
 											<!-- Avatar -->
 											<div class="avatar me-3">
-												<?php echo wp_return_echo($profile_image); ?>
+												<?php echo wp_return_echo($profile_image); ?> 
 											</div>
 
 											<div>
