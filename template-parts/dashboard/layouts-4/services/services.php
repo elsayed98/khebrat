@@ -120,8 +120,8 @@ $query = new WP_Query($args);
 
 										<div class="d-flex align-items-center">
 											<span class="mb-0 me-1"><?php echo esc_html__('قيمة العرض : ', 'khebrat_theme'); ?></span>
-											<span class="text-span mb-0 me-1"><i class="icon-Saudi_Riyal_Symbol-2"></i><?php echo esc_html($offer_price); ?></span>
-											
+											<span class="text-span mb-0 me-1"><?php echo esc_html($offer_price); ?></span>
+											<i class="icon-Saudi_Riyal_Symbol-2"></i>
 										</div>
 
 

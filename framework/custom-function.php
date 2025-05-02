@@ -275,7 +275,7 @@ if (!function_exists('fl_offer_services')) {
         // حفظ الحقول الإضافية
         update_post_meta($post_id, '_service_offer_price', $offer_price);
         update_post_meta($post_id, '_service_execution_time', $execution_time);
-        update_post_meta($post_id, '_offer_status', 'active');
+        update_post_meta($post_id, '_service_offer_status', 'active');
         
 
         // حفظ معرف الخدمة في user_meta
