@@ -1,5 +1,5 @@
 <?php
-
+global $khebrat_theme_options;
 if (!isset($_GET['sfid']) || !is_numeric($_GET['sfid'])) {
   echo '<div class="alert alert-danger">معرف الخدمة غير صالح.</div>';
   exit;
@@ -7,11 +7,13 @@ if (!isset($_GET['sfid']) || !is_numeric($_GET['sfid'])) {
 
 $service_id = intval($_GET['sfid']);
 
-$service_type_id = get_post_meta($service_id, '_service_type', true);
-$service_type = get_the_title($service_type_id);
-$specialization = get_post_meta($service_id, '_specialization', true); // التخصص
-$order_date = get_the_date('d M Y'); // تاريخ الطلب (مثل 27 Apr 2025)
+$service_type_id  = get_post_meta($service_id, '_service_type', true);
+$service_type     = get_the_title($service_type_id);
+$specialization   = get_post_meta($service_id, '_specialization', true); // التخصص
+$order_date       = get_the_date('d M Y'); // تاريخ الطلب (مثل 27 Apr 2025)
+$offer_statue     = get_post_meta($service_id, '_service_offer_status', true);
 
+// hatem_debug($offer_statue);
 
 $args = array(
   'post_type'      => 'service_offers',
@@ -67,17 +69,18 @@ $query = new WP_Query($args);
   <?php
   if ($query->have_posts()) :
     while ($query->have_posts()) : $query->the_post();
-      $author_id = get_post_field('post_author', get_the_ID());
-      $lid = get_user_meta($author_id, 'lawyer_id', true);
+      $author_id      = get_post_field('post_author', get_the_ID());
+      $lid            = get_user_meta($author_id, 'lawyer_id', true);
+      $profile_image  = get_profile_img($lid, "lawyer", "avatar-img rounded-circle");
+      $user_name      = exertio_get_username('lawyer', $lid);
+      $days           = get_post_meta(get_the_ID(), '_service_execution_time', true);
+      $price          = get_post_meta(get_the_ID(), '_service_offer_price', true);
+      $offer_link     = get_permalink($khebrat_theme_options['user_dashboard_page']) . '/?ext=offer-detail&offer_id=' . get_the_ID(); 
 
-      $profile_image = get_profile_img($lid, "lawyer", "avatar-img rounded-circle");
-      $user_name = exertio_get_username('lawyer', $lid);
-      $days = get_post_meta(get_the_ID(), '_service_execution_time', true);
-      $price = get_post_meta(get_the_ID(), '_service_offer_price', true);
 
   ?>
       <!-- Ticket item START -->
-      <div class="card border">
+      <div class="card border <?php echo get_the_ID() ?>">
         <!-- Card header -->
         <div class="card-header d-sm-flex justify-content-sm-between align-items-center">
           <!-- Airline Name -->
@@ -124,7 +127,7 @@ $query = new WP_Query($args);
         <!-- Card footer -->
         <div class="card-footer pt-4">
           <ul class="list-inline bg-light rounded-2 d-sm-flex text-center justify-content-sm-between mb-0 px-4 py-2">
-            <li class="list-inline-item"><a class="btn btn-success btn-sm" href="#"><?php echo esc_html__('تفاصيل العرض ', 'khebrat_theme'); ?></a></li>
+            <li class="list-inline-item"><a class="btn btn-success btn-sm" href="<?php echo $offer_link ?>"><?php echo esc_html__('تفاصيل العرض ', 'khebrat_theme'); ?></a></li>
             <li class="list-inline-item"><a class="btn btn-outline-success btn-sm" href="#"><?php echo esc_html__('قبول العرض', 'khebrat_theme'); ?></a></li>
             <li class="list-inline-item"><a class="btn btn-success btn-sm" href="<?php echo esc_attr(get_permalink($lid));?>"><?php echo esc_html__('ملف المحامي', 'khebrat_theme'); ?></a></li>
           </ul>

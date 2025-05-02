@@ -14,6 +14,8 @@ $current_user_id = get_current_user_id();
 
 
 
+
+
 if (in_array('khebrat-framework/index.php', apply_filters('active_plugins', get_option('active_plugins')))) {
 
     if (is_user_logged_in()) {
@@ -21,7 +23,7 @@ if (in_array('khebrat-framework/index.php', apply_filters('active_plugins', get_
 
 
         $current_id = get_the_ID();
-
+        // hatem_debug($khebrat_theme_options);
         if ($current_id == $khebrat_theme_options['page_case_study']) { 
             get_template_part('template-parts/legal-services/page-case-study');
         } 
