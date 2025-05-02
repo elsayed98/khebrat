@@ -277,7 +277,7 @@ if (have_posts()) {
                             <!-- Icon -->
                             <div class="icon-lg  bg-opacity-10 rounded-circle text-primary"><i class="fas fa-business-time"></i></div>
                             <div class="ms-3">
-                                <h5 class="mb-0"><a  href="<?php echo get_page_link(82) ?>" class="stretched-link">كتابات قانوية</a></h5>
+                                <h5 class="mb-0"><a  href="<?php echo get_page_link(82) ?>" class="stretched-link"><?php echo get_the_title(82) ?></a></h5>
                                 <p class="small">صياغة اللوائح و المذكرات الجوابية الاعتراضية وصحائف الدعوي و النقض الاتماس و غيرها من الخطابات بطريقة قانونية سليمة</p>
                                 <span>تبدا من 500  <?php echo do_shortcode( '[hatem_sar_sb]' ) ?></span>
                             </div>
