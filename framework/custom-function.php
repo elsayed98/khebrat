@@ -82,6 +82,11 @@ function get_field_meta($post_id, $fieldName, $message = '')
 }
 
 
+function get_front_dashbord(){
+    global $khebrat_theme_options;
+    return get_the_permalink($khebrat_theme_options['user_dashboard_page']);
+  }
+
 
 add_action('wp_ajax_upload_pdf_to_media', 'upload_pdf_to_media_callback');
 add_action('wp_ajax_nopriv_upload_pdf_to_media', 'upload_pdf_to_media_callback');
@@ -253,7 +258,7 @@ if (!function_exists('fl_offer_services')) {
         $execution_time = sanitize_text_field($params['service_execution_time']);
         $offer_price = sanitize_text_field($params['service_offer_price']);
         $offer_details = wp_kses_post($params['offer_details']);
-
+        $service_author = get_post_field('post_author', $service_id); // صاحب الخدمة الأصلية
 
         // إنشاء منشور جديد
         $new_post = array(
@@ -261,7 +266,7 @@ if (!function_exists('fl_offer_services')) {
             'post_content'  => $offer_details,
             'post_status'   => 'publish',
             'post_author'   => $current_user_id,
-            'post_type'     => '', // تأكد أن هذا post type موجود
+            'post_type'     => 'service_offers', 
             'post_parent'   => $service_id,
         );
 
@@ -277,6 +282,14 @@ if (!function_exists('fl_offer_services')) {
         update_post_meta($post_id, '_service_execution_time', $execution_time);
         update_post_meta($post_id, '_service_offer_status', 'active');
         
+        do_action('khebrat_notification_filter', array(
+            'post_id' => $service_id,
+            'n_type' => 'send_offer',
+            'sender_id' => $current_user_id,
+            'receiver_id' => $service_author,
+            'sender_type' => 'lawyer'
+            
+        ));
 
         // حفظ معرف الخدمة في user_meta
         $offered_services[] = $service_id;
@@ -294,6 +307,7 @@ function handle_offer_action_callback() {
     if (!is_user_logged_in()) {
         wp_send_json_error(['message' => 'يجب تسجيل الدخول.']);
     }
+    $current_user_id = get_current_user_id();
 
     $offer_id = intval($_POST['offer_id']);
     $action_type = sanitize_text_field($_POST['action_type']);
@@ -301,6 +315,7 @@ function handle_offer_action_callback() {
     if (!$offer_id || !in_array($action_type, ['accept', 'reject'])) {
         wp_send_json_error(['message' => 'بيانات غير صحيحة.']);
     }
+    $offer_author =  get_post_field('post_author', $offer_id);
 
     $offer = get_post($offer_id);
     if (!$offer || $offer->post_type !== 'service_offers') {
@@ -314,6 +329,14 @@ function handle_offer_action_callback() {
 
     if ($action_type === 'accept') {
         $parent_id = wp_get_post_parent_id($offer_id);
+        do_action('khebrat_notification_filter', array(
+            'post_id' => $parent_id,
+            'n_type' => 'accept_offer',
+            'sender_id' => $current_user_id,
+            'receiver_id' => $offer_author,
+            'sender_type' => 'customer'
+            
+        ));
 
         if ($parent_id) {
             $other_offers = get_posts([
@@ -327,6 +350,7 @@ function handle_offer_action_callback() {
             foreach ($other_offers as $other_offer) {
                 update_post_meta($other_offer->ID, '_service_offer_status', 'rejected');
             }
+
         }
     }
 

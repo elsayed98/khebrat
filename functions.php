@@ -19,10 +19,12 @@ function khebrat_theme_setup() {
 	require trailingslashit(get_template_directory()) ."inc/classes/index.php";
     require trailingslashit(get_template_directory()) . "inc/nav.php";
 	require trailingslashit(get_template_directory()) . 'tgm/tgm-init.php';
-	require trailingslashit(get_template_directory()) . "inc/zoom/zoom-authorization.php";
+	
+	
     require trailingslashit(get_template_directory()) . "inc/shop-func.php";
 	require trailingslashit(get_template_directory()) . 'framework/theme-enqueue.php';
 	require trailingslashit(get_template_directory()) . 'framework/custom-function.php';
+	require trailingslashit(get_template_directory()) . 'framework/notifications.php';
 	require THEME_INC . '/helpers.php';
 	include('inc/bootstrap-walker.php');
 
@@ -638,77 +640,5 @@ function restrict_site_to_logged_in_users() {
     }
 }
 add_action('template_redirect', 'restrict_site_to_logged_in_users');
-
-
-
-
-/*
-
-function register_legal_services_cpt() {
-    $labels = array(
-        'name'               => 'الخدمات القانونية',
-        'singular_name'      => 'خدمة قانونية',
-        'menu_name'          => 'الخدمات القانونية',
-        'name_admin_bar'     => 'خدمة قانونية',
-        'add_new'            => 'إضافة خدمة جديدة',
-        'add_new_item'       => 'إضافة خدمة قانونية جديدة',
-        'new_item'           => 'خدمة قانونية جديدة',
-        'edit_item'          => 'تعديل الخدمة',
-        'view_item'          => 'عرض الخدمة',
-        'all_items'          => 'كل الخدمات',
-        'search_items'       => 'البحث عن خدمة',
-        'parent_item_colon'  => 'الخدمات الرئيسية:',
-        'not_found'          => 'لا توجد خدمات قانونية',
-        'not_found_in_trash' => 'لا توجد خدمات قانونية في سلة المهملات'
-    );
-
-    $args = array(
-        'labels'             => $labels,
-        'public'             => true,
-        'publicly_queryable' => true,
-        'show_ui'            => true,
-        'show_in_menu'       => true,
-        'query_var'          => true,
-        'rewrite'            => array('slug' => 'legal-services'),
-        'capability_type'    => 'post',
-        'has_archive'        => true,
-        'hierarchical'       => false,
-        'menu_position'      => 5,
-        'menu_icon'          => 'dashicons-clipboard', // أيقونة مخصصة في لوحة التحكم
-        'supports'           => array('title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'custom-fields'),
-        'show_in_rest'       => true, // دعم محرر جوتنبرج
-    );
-
-    register_post_type('legal_services', $args);
-}
-add_action('init', 'register_legal_services_cpt'); 
-function register_legal_services_taxonomy() {
-    $labels = array(
-        'name'              => 'تصنيفات الخدمات',
-        'singular_name'     => 'تصنيف الخدمة',
-        'search_items'      => 'بحث في التصنيفات',
-        'all_items'         => 'كل التصنيفات',
-        'edit_item'         => 'تعديل التصنيف',
-        'update_item'       => 'تحديث التصنيف',
-        'add_new_item'      => 'إضافة تصنيف جديد',
-        'new_item_name'     => 'اسم التصنيف الجديد',
-        'menu_name'         => 'تصنيفات الخدمات',
-    );
-
-    $args = array(
-        'labels'            => $labels,
-        'hierarchical'      => true,  // جعل التصنيف هرمي مثل التصنيفات الافتراضية (مثل الفئات)
-        'public'            => true,
-        'show_ui'           => true,
-        'show_admin_column' => true,
-        'query_var'         => true,
-        'rewrite'           => array('slug' => 'legal-category'),
-    );
-
-    register_taxonomy('legal_category', array('legal_services'), $args);
-}
-add_action('init', 'register_legal_services_taxonomy');
-*/
-
 
 

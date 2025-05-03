@@ -83,8 +83,7 @@ $alt_id ='';
 						</li>
 						
 						<li class="nav-item">
-							<a class="nav-link text-danger bg-danger-soft-hover" href="#"><i
-									class="fas fa-sign-out-alt fa-fw me-2"></i><?php echo esc_html__( 'تسجيل خروج', 'khebrat_theme' ); ?></a>
+							<a class="nav-link text-danger bg-danger-soft-hover" href="<?php echo wp_logout_url(get_the_permalink(fl_framework_get_options('login_page'))); ?>"><i class="fas fa-sign-out-alt fa-fw me-2"></i><?php echo esc_html__( 'تسجيل خروج', 'khebrat_theme' ); ?></a>
 						</li>
 					</ul>
 					<!-- Sidebar menu item END -->

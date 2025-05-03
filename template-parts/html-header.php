@@ -196,27 +196,43 @@ if (in_array('redux-framework/redux-framework.php', apply_filters('active_plugin
 					<!-- Profile and Notification START -->
 					<ul class="nav flex-row align-items-center list-unstyled ms-xl-auto">
 						<?php
-						if (is_user_logged_in()) { ?>
+						if (is_user_logged_in()) {
+							$notification = exertio_notification_ajax('count');
+						?>
 							<!-- Notification dropdown START -->
 							<li class="nav-item ms-0 ms-md-3 dropdown">
 								<!-- Notification button -->
-								<a class="nav-link p-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+
+								<a class="nav-link p-0" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
 									<i class="bi bi-bell fa-fw fs-5"></i>
 								</a>
 								<!-- Notification dote -->
-								<span class="notif-badge animation-blink"></span>
+								<?php if ($notification > 0): ?>
+									<span class="notif-badge animation-blink"></span>
+								<?php endif; ?>
+
 
 								<!-- Notification dropdown menu START -->
+
 								<div class="dropdown-menu dropdown-animation dropdown-menu-end dropdown-menu-size-md p-0 shadow-lg">
 									<div class="card bg-transparent">
 										<!-- Card header -->
 										<div class="card-header bg-transparent d-flex justify-content-between align-items-center border-bottom">
-											<h6 class="m-0">Notifications <span class="badge bg-danger bg-opacity-10 text-danger ms-2">4 new</span></h6>
+											
+											<h6 class="m-0">
+												الإشعارات
+												<?php if ($notification > 0): ?>
+													<span class="badge bg-danger bg-opacity-10 text-danger ms-2" id="notif-count-text"><?php echo esc_html($notification); ?> جديد</span>
+												<?php else: ?>
+													<span class="badge bg-secondary bg-opacity-10 text-muted ms-2" id="notif-count-text">0 جديد</span>
+												<?php endif; ?>
+											</h6>
 											<a class="small" href="#">Clear all</a>
 										</div>
 
 										<!-- Card body START -->
 										<div class="card-body p-0">
+											<?php echo khebrat_get_notifications($current_user_id); ?>
 											<ul class="list-group list-group-flush list-unstyled p-2">
 												<!-- Notification item -->
 												<li>
@@ -283,6 +299,7 @@ if (in_array('redux-framework/redux-framework.php', apply_filters('active_plugin
 									$active_user = 	$cust_id;
 									$profile_image = get_profile_img($active_user, "customer", "avatar-img rounded-circle");
 
+									$profile = 'profile';
 									$user_name = exertio_get_username('customer', $active_user);
 									$user_type = esc_html__('Customer', 'khebrat_theme');
 									$wallet_link = get_the_permalink() . '?ext=payouts';
@@ -291,6 +308,7 @@ if (in_array('redux-framework/redux-framework.php', apply_filters('active_plugin
 									$active_user = 	$law_id;
 									$profile_image = get_profile_img($active_user, "lawyer", "avatar-img rounded-circle");
 
+									$profile = 'settings';
 									$user_name = exertio_get_username('lawyer', $active_user);
 									$user_type = esc_html__('lawyer', 'khebrat_theme');
 									$wallet_link = get_the_permalink() . '?ext=payouts';
@@ -308,12 +326,12 @@ if (in_array('redux-framework/redux-framework.php', apply_filters('active_plugin
 										<div class="d-flex align-items-center">
 											<!-- Avatar -->
 											<div class="avatar me-3">
-												<?php echo wp_return_echo($profile_image); ?> 
+												<?php echo wp_return_echo($profile_image); ?>
 											</div>
 
 											<div>
 												<h6 class="mb-0"><?php echo esc_html($user_name) . $active_profile . $active_user; ?></h6>
-												<a href="<?php get_front_dashbord() ?>" class="small m-0"><?php echo wp_get_current_user()->user_email ?></a>
+												<a href="<?php echo get_front_dashbord() ?>" class="small m-0"><?php echo wp_get_current_user()->user_email ?></a>
 											</div>
 										</div>
 									</li>
@@ -322,11 +340,11 @@ if (in_array('redux-framework/redux-framework.php', apply_filters('active_plugin
 									<li>
 										<hr class="dropdown-divider">
 									</li>
-									<li><a class="dropdown-item" href="<?php get_front_dashbord() ?>"><i class="bi bi-house fa-fw me-2"></i>لوحة تحكم</a></li>
-									<li><a class="dropdown-item" href="<?php get_front_dashbord() . '?ext=services' ?>"><i class="bi bi-person-gear fa-fw me-2"></i>خدماتي</a></li>
-									<li><a class="dropdown-item" href="<?php get_front_dashbord() . '?ext=profile' ?>"><i class="bi bi-gear fa-fw me-2"></i>الاعدادات</a></li>
-									<li><a class="dropdown-item" href="<?php get_front_dashbord() . '?ext=profile' ?>"><i class="bi bi-person-video2 fa-fw me-2"></i>جلساتي</a></li>
-									<li><a class="dropdown-item bg-danger-soft-hover" href="<?php echo wp_logout_url(get_the_permalink(fl_framework_get_options('login_page'))); ?>"><i class="bi bi-power fa-fw me-2"></i>Sign Out</a></li>
+									<li><a class="dropdown-item" href="<?php echo get_front_dashbord() ?>"><i class="bi bi-house fa-fw me-2"></i>لوحة تحكم</a></li>
+									<li><a class="dropdown-item" href="<?php echo get_front_dashbord() . '?ext=services' ?>"><i class="bi bi-person-gear fa-fw me-2"></i>خدماتي</a></li>
+									<li><a class="dropdown-item" href="<?php echo get_front_dashbord() . '?ext=' . $profile; ?>"><i class="bi bi-gear fa-fw me-2"></i>الاعدادات</a></li>
+									<li><a class="dropdown-item" href="<?php echo get_front_dashbord() . '?ext=profile' ?>"><i class="bi bi-person-video2 fa-fw me-2"></i>جلساتي</a></li>
+									<li><a class="dropdown-item bg-danger-soft-hover" href="<?php echo wp_logout_url(get_the_permalink(fl_framework_get_options('login_page'))); ?>"><i class="bi bi-power fa-fw me-2"></i><?php echo esc_html__( 'تسجيل خروج', 'khebrat_theme' ); ?></a></li>
 									<li>
 										<hr class="dropdown-divider">
 									</li>

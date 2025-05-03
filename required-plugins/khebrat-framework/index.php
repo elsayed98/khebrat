@@ -95,7 +95,7 @@ else
 	require FL_PLUGIN_PATH . 'plugin-files/pages/queued_services.php';
 	require FL_PLUGIN_PATH . 'plugin-files/pages/completed_services.php';
 	require FL_PLUGIN_PATH . 'plugin-files/pages/users.php';
-	require FL_PLUGIN_PATH . 'plugin-files/pages/notifications.php';
+	//require FL_PLUGIN_PATH . 'plugin-files/pages/notifications.php';
 	require FL_PLUGIN_PATH . 'plugin-files/pages/statements.php';
 	
 	/* PLUGIN FUNCTIONS */

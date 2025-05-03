@@ -58,8 +58,3 @@ function Hatem_get_post_withFilds() {
     return $result;
 }
 
-
-function get_front_dashbord(){
-  global $khebrat_theme_options;
-  return get_permalink($khebrat_theme_options['user_dashboard_page']);
-}

@@ -3320,7 +3320,7 @@
 			});
 		}
 	});
-
+/*
 	if (localize_vars_frontend.exertio_notification == true) {
 		setInterval(exertio_automate_notification, localize_vars_frontend.notification_time);
 		var title = document.title;
@@ -3363,6 +3363,59 @@
 			});
 		});
 	}
+*/
+
+if (localize_vars_frontend.exertio_notification == true) {
+	setInterval(exertio_automate_notification, localize_vars_frontend.notification_time);
+	var title = document.title;
+
+	function exertio_automate_notification() {
+		var freelanceAjaxURL = $("#freelance_ajax_url").val();
+		$.post(freelanceAjaxURL, { action: 'exertio_notification_ajax' }).done(function (response) {
+			if (true === response.success) {
+				var n_count = response.data.count;
+				if (n_count > 0) {
+					// ✅ تحديث قائمة الإشعارات
+					$("#notif-list").html(response.data.n_list);
+
+					// ✅ تحديث عداد الإشعارات
+					$("#notif-count-text").html(n_count + ' جديد');
+
+					// ✅ إظهار نقطة التنبيه
+					$(".notif-badge").removeClass('d-none');
+
+					// ✅ تغيير عنوان الصفحة
+					document.title = '(' + n_count + ') ' + title;
+				} else {
+					// ✅ إذا لم يوجد إشعارات
+					$("#notif-list").html('<div class="text-center p-3 text-muted">لا توجد إشعارات.</div>');
+					$("#notif-count-text").html('0 جديد');
+					$(".notif-badge").addClass('d-none');
+					document.title = title;
+				}
+			}
+		}).fail(function () {
+			console.log('AJAX failed');
+		});
+	}
+
+	// عند الضغط على زر الإشعارات - تعليمها كمقروءة
+	$('a#notificationDropdown').on('click', function () {
+		var freelanceAjaxURL = $("#freelance_ajax_url").val();
+		$.post(freelanceAjaxURL, { action: 'exertio_read_notifications', security: $('#gen_nonce').val() }).done(function (response) {
+			if (true === response.success) {
+				// ✅ إخفاء العداد والنقطة
+				$("#notif-count-text").html('0 جديد');
+				$(".notif-badge").addClass('d-none');
+				document.title = title;
+			} else {
+				toastr.error(response.data.message);
+			}
+		}).fail(function () {
+			toastr.error($('#nonce_error').val());
+		});
+	});
+}
 
 
 
