@@ -229,7 +229,7 @@ $(document).ready(function(){
 		}
 	});
 
-
+	//lawyer signup
 	$('#lawyer-signup-btn').click(function(){
 		if( $('form#lawyer-signup-form').smkValidate() ){
 			var this_value = $(this);

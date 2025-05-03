@@ -85,7 +85,7 @@ function get_field_meta($post_id, $fieldName, $message = '')
 function get_front_dashbord(){
     global $khebrat_theme_options;
     return get_the_permalink($khebrat_theme_options['user_dashboard_page']);
-  }
+}
 
 
 add_action('wp_ajax_upload_pdf_to_media', 'upload_pdf_to_media_callback');

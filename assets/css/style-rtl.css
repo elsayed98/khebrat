@@ -22407,3 +22407,8 @@ html[dir=rtl] .choices__input {
   text-align: center;
 }
 
+.post-desc {
+  white-space: pre;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}

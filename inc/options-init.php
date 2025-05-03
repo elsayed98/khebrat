@@ -351,6 +351,14 @@ Redux::setSection($opt_name, array(
 			'default'  => array('url' => trailingslashit(get_template_directory_uri()) . 'images/logo-dashboard.png'),
 		),
 		array(
+			'id'       => 'dark_logo',
+			'type'     => 'media',
+			'url'      => true,
+			'title'    => __('شعار الوضع المظلم', 'khebrat_theme'),
+			'compiler' => 'true',
+			'default'  => array('url' => trailingslashit(get_template_directory_uri()) . 'images/logo-dashboard.png'),
+		),
+		array(
 			'id'       => 'dasboard_logo',
 			'type'     => 'media',
 			'url'      => true,

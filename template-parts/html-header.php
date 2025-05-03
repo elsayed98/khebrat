@@ -154,7 +154,7 @@ if (in_array('redux-framework/redux-framework.php', apply_filters('active_plugin
 			<nav class="navbar navbar-expand-xl">
 				<div class="container">
 					<!-- Logo START -->
-					<a class="navbar-brand" href="index-2.html">
+					<a class="navbar-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
 						<?php
 						if (!empty($khebrat_theme_options['frontend_logo']['url'])) {
 							echo '<img class="light-mode-item navbar-brand-item" src="' . esc_url($khebrat_theme_options['frontend_logo']['url']) . '" alt="شعار الموقع">';
