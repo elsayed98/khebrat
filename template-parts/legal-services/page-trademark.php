@@ -289,6 +289,30 @@ foreach ($parent_terms as $parent) {
 
 
 <script>
+     document.addEventListener('DOMContentLoaded', function() {
+        // الحصول على كل أسماء مجموعات الراديو المختلفة
+        const radioButtons = document.querySelectorAll('input[type="radio"]');
+
+        radioButtons.forEach(radio => {
+            radio.addEventListener('change', function() {
+                const name = this.name;
+                const group = document.querySelectorAll(`input[type="radio"][name="${name}"]`);
+
+                // إزالة class 'active' من كل العناصر في نفس المجموعة
+                group.forEach(r => {
+                    if (r.closest('label')) {
+                        r.closest('label').classList.remove('active');
+                    }
+                });
+
+                // إضافة class 'active' للراديو المختار
+                if (this.checked && this.closest('label')) {
+                    this.closest('label').classList.add('active');
+                }
+            });
+        });
+    });
+    
     document.addEventListener('DOMContentLoaded', function() {
         let currentStep = 0;
         const steps = document.querySelectorAll('.step');
