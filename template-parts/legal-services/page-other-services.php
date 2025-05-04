@@ -211,29 +211,29 @@ foreach ($parent_terms as $parent) {
         const childOptions = document.getElementById('child-options');
         const childrenByParent = <?php echo json_encode($children_by_parent); ?>;
 
-        function showStep(stepIndex) {
-            steps.forEach((step, index) => {
-                step.classList.toggle('active', index === stepIndex);
-            });
-        }
+        // function showStep(stepIndex) {
+        //     steps.forEach((step, index) => {
+        //         step.classList.toggle('active', index === stepIndex);
+        //     });
+        // }
 
-        nextButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                if (currentStep < steps.length - 1) {
-                    currentStep++;
-                    showStep(currentStep);
-                }
-            });
-        });
+        // nextButtons.forEach(button => {
+        //     button.addEventListener('click', function() {
+        //         if (currentStep < steps.length - 1) {
+        //             currentStep++;
+        //             showStep(currentStep);
+        //         }
+        //     });
+        // });
 
-        prevButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                if (currentStep > 0) {
-                    currentStep--;
-                    showStep(currentStep);
-                }
-            });
-        });
+        // prevButtons.forEach(button => {
+        //     button.addEventListener('click', function() {
+        //         if (currentStep > 0) {
+        //             currentStep--;
+        //             showStep(currentStep);
+        //         }
+        //     });
+        // });
 
         parentRadios.forEach(radio => {
             radio.addEventListener('change', function() {
@@ -267,7 +267,7 @@ foreach ($parent_terms as $parent) {
             });
         });
 
-        showStep(currentStep);
+        // showStep(currentStep);
     });
 </script>
 

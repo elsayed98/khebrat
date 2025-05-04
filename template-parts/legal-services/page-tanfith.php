@@ -383,29 +383,29 @@ foreach ($parent_terms as $parent) {
         const childOptions = document.getElementById('child-options');
         const childrenByParent = <?php echo json_encode($children_by_parent); ?>;
 
-        function showStep(stepIndex) {
-            steps.forEach((step, index) => {
-                step.classList.toggle('active', index === stepIndex);
-            });
-        }
+        // function showStep(stepIndex) {
+        //     steps.forEach((step, index) => {
+        //         step.classList.toggle('active', index === stepIndex);
+        //     });
+        // }
 
-        nextButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                if (currentStep < steps.length - 1) {
-                    currentStep++;
-                    showStep(currentStep);
-                }
-            });
-        });
+        // nextButtons.forEach(button => {
+        //     button.addEventListener('click', function() {
+        //         if (currentStep < steps.length - 1) {
+        //             currentStep++;
+        //             showStep(currentStep);
+        //         }
+        //     });
+        // });
 
-        prevButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                if (currentStep > 0) {
-                    currentStep--;
-                    showStep(currentStep);
-                }
-            });
-        });
+        // prevButtons.forEach(button => {
+        //     button.addEventListener('click', function() {
+        //         if (currentStep > 0) {
+        //             currentStep--;
+        //             showStep(currentStep);
+        //         }
+        //     });
+        // });
 
         parentRadios.forEach(radio => {
             radio.addEventListener('change', function() {
@@ -439,42 +439,42 @@ foreach ($parent_terms as $parent) {
             });
         });
 
-        showStep(currentStep);
+        // showStep(currentStep);
     });
 </script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        let steps = document.querySelectorAll(".step");
-        let currentStep = 0;
-        let nextBtns = document.querySelectorAll(".nextBtn");
-        let prevBtns = document.querySelectorAll(".prevBtn");
-        let categoryInputs = document.querySelectorAll(".category-input");
-        let goToStep2Btn = document.getElementById("goToStep2");
+    // document.addEventListener("DOMContentLoaded", function() {
+    //     let steps = document.querySelectorAll(".step");
+    //     let currentStep = 0;
+    //     let nextBtns = document.querySelectorAll(".nextBtn");
+    //     let prevBtns = document.querySelectorAll(".prevBtn");
+    //     let categoryInputs = document.querySelectorAll(".category-input");
+    //     let goToStep2Btn = document.getElementById("goToStep2");
 
-        function showStep(stepIndex) {
-            steps.forEach((step, index) => {
-                step.classList.toggle("active", index === stepIndex);
-            });
-        }
+    //     function showStep(stepIndex) {
+    //         steps.forEach((step, index) => {
+    //             step.classList.toggle("active", index === stepIndex);
+    //         });
+    //     }
 
-        // التنقل بين الصفحات عند الضغط على زر "التالي"
-        nextBtns.forEach(btn => {
-            btn.addEventListener("click", function() {
-                currentStep++;
-                showStep(currentStep);
-            });
-        });
+    //     // التنقل بين الصفحات عند الضغط على زر "التالي"
+    //     nextBtns.forEach(btn => {
+    //         btn.addEventListener("click", function() {
+    //             currentStep++;
+    //             showStep(currentStep);
+    //         });
+    //     });
 
-        // التنقل بين الصفحات عند الضغط على زر "السابق"
-        prevBtns.forEach(btn => {
-            btn.addEventListener("click", function() {
-                currentStep--;
-                showStep(currentStep);
-            });
-        });
+    //     // التنقل بين الصفحات عند الضغط على زر "السابق"
+    //     prevBtns.forEach(btn => {
+    //         btn.addEventListener("click", function() {
+    //             currentStep--;
+    //             showStep(currentStep);
+    //         });
+    //     });
 
-    });
+    // });
     document.addEventListener('DOMContentLoaded', function() {
         const radioGroups = document.querySelectorAll('input[type="radio"][class="d-none"]');
 
