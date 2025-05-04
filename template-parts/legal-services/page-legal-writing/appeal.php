@@ -13,7 +13,7 @@ if (isset($_GET['lsid']) == '') {
         $simple_services = get_post_meta($customer_id, '_simple_services', true);
         $freelancer_package_expiry_date = get_post_meta($customer_id, '_freelancer_package_expiry_date', true);
         $today_date = date("d-m-Y");
-        if ($simple_services < 1 && $simple_services != -1 || strtotime($freelancer_package_expiry_date) < strtotime($today_date)) {
+        if ($simple_services < 1 && $simple_services != -1 || strtotime($freelancer_package_expiry_date) < strtotime($today_date)) { 
             echo exertio_redirect(get_the_permalink(fl_framework_get_options('freelancer_package_page')));
         }
     }
@@ -378,6 +378,7 @@ foreach ($parent_terms as $parent) {
                         <button type="button" class="btn btn-secondary prevBtn">السابق</button>
                         <button type="button" class="btn btn-success" id="create_legal_services_btn" data-post-id="<?php echo esc_attr($lsid) ?>">إرسال</button>
                         <input type="hidden" name="service_type" value="<?php echo $khebrat_theme_options['page_legal_writing']; ?>" />
+                        <input type="hidden" name="service_type_writing" value="appeal" />
 
                         <input type="hidden" id="create_legal_services_nonce" value="<?php echo wp_create_nonce('fl_create_legal_services_secure'); ?>" />
                     </div>

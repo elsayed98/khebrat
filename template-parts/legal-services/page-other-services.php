@@ -1,8 +1,6 @@
 <?php
 //صفحة - خدمات أخرى
 
-
-
 global $khebrat_theme_options;
 $current_user_id = get_current_user_id();
 
@@ -98,7 +96,7 @@ foreach ($parent_terms as $parent) {
             <h3 class="text-center mb-4"><?php echo get_the_title($khebrat_theme_options['page_other_services']); ?></h3>
 
 
-            <form id="legal_services_form">
+            <form id="legal_services_form"> 
                 <!-- الصفحة 1: اختيار التصنيف الأب -->
                 <div class="step active">
                     <p class="mb-4 ">1/2</p>
@@ -124,10 +122,6 @@ foreach ($parent_terms as $parent) {
                         <label class="form-label fw-bold">الخدمة المطلوب تنفيذها</label>
                         <textarea name="requested_service" rows="4" class="form-control" placeholder="يرجى كتابة وتحديد المطلوب بشكل واضح ومختصر ويفضل على شكل نقاط" required><?php echo esc_textarea($requested_service); ?></textarea>
                     </div>
-
-
-
-
 
                     <div class="d-flex justify-content-between mt-4">
                         <button type="button" class="btn btn-secondary prevBtn">السابق</button>

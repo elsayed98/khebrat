@@ -27,7 +27,7 @@ $cust_id = get_user_meta($current_user_id, 'customer_id', true);
 
 // التحقق إذا كان هناك lsid في الرابط
 if (isset($_GET['lsid'])) {
-    $lsid = intval($_GET['lsid']); 
+    $lsid = intval($_GET['lsid']);
 } else {
     // لا يوجد lsid في الرابط، محاولة البحث عن منشور pending
     $args = array(
@@ -90,6 +90,40 @@ foreach ($parent_terms as $parent) {
 }
 
 
+
+
+
+
+$is_remote_session = get_post_meta($lsid, '_is_remote_session', true);
+$session_date = get_post_meta($lsid, '_session_date', true);
+$session_time = get_post_meta($lsid, '_session_time', true);
+$session_location1 = get_post_meta($lsid, '_session_location_1', true);
+$session_location2 = get_post_meta($lsid, '_session_location_2', true);
+$taxonomy = 'customer-locations'; // ← غيّرها حسب التصنيف الخاص بك
+$terms = get_terms([
+    'taxonomy' => $taxonomy,
+    'hide_empty' => false,
+]);
+
+$parent_locations = [];
+$children_by_locations = [];
+
+foreach ($terms as $term) {
+    if ($term->parent == 0) {
+        $parent_locations[] = $term;
+    } else {
+        $children_by_locations[$term->parent][] = $term;
+    }
+}
+
+// استرجاع التصنيف الابن المحفوظ وتحديد التصنيف الأب
+$saved_child_term = $session_location2;
+$saved_parent_term = '';
+if ($saved_child_term) {
+    $child_term = get_term($saved_child_term);
+    $saved_parent_term = $child_term ? $child_term->parent : '';
+}
+
 ?>
 
 <div class="container mt-5">
@@ -108,7 +142,7 @@ foreach ($parent_terms as $parent) {
                         <?php foreach ($parent_terms as $parent) : ?>
                             <div class="col-md-6 col-lg-4">
                                 <label class="btn btn-outline-primary w-100 p-3 d-flex align-items-center">
-                                    <input type="radio" name="locations_parent_term" class="d-none nextBtn" value="<?php echo esc_attr($parent->term_id); ?>">
+                                    <input type="radio" name="locations_parent_term" class="d-none" value="<?php echo esc_attr($parent->term_id); ?>">
                                     <div>
                                         <h6 class="mb-1"><?php echo esc_html($parent->name); ?></h6>
                                         <p class="small text-muted"><?php echo esc_html($parent->description); ?></p>
@@ -243,7 +277,7 @@ foreach ($parent_terms as $parent) {
                     <!-- حقل عدد الجلسات (يظهر فقط عند اختيار "نعم") -->
                     <div id="previous_sessions_field" class="mb-3" style="display: <?php echo ($has_previous_sessions == 'yes') ? 'block' : 'none'; ?>;">
                         <label class="form-label fw-bold">كم عدد الجلسات السابقة</label>
-                        <input type="number" name="previous_sessions_count" value="<?php echo esc_attr($previous_sessions_count); ?>" class="form-control" placeholder="عدد الجلسات" min="1" required>
+                        <input type="number" name="previous_sessions_count" value="<?php echo esc_attr($previous_sessions_count); ?>" class="form-control" placeholder="عدد الجلسات" min="1" required data-smk-msg="يرجى كتابة عنوان الطلب">
                     </div>
 
                     <script>
@@ -281,7 +315,7 @@ foreach ($parent_terms as $parent) {
 
                     <div class="form-group">
                         <label for="requestTitle">عنوان الطلب</label>
-                        <input type="text" class="form-control" id="requestTitle" name="request_title" value="<?php echo get_post_meta($lsid, '_request_title', true); ?>" placeholder="يرجى كتابة عنوان الطلب بشكل واضح ومختصر" required></input>
+                        <input type="text" class="form-control" id="requestTitle" name="request_title" value="<?php echo get_post_meta($lsid, '_request_title', true); ?>" placeholder="يرجى كتابة عنوان الطلب بشكل واضح ومختصر" required data-smk-msg="يرجى كتابة عنوان الطلب"></input>
 
                     </div>
 
@@ -291,7 +325,7 @@ foreach ($parent_terms as $parent) {
                     </div>
 
                     <div class="form-group">
-                        <label for="questions">الأشياء التي تبحث عنها إجابات لها من خلال هذه الدراسة</label>
+                        <label for="questions"><?php echo esc_html__('المطلوب من المحامي عمله في هذه الجلسة', 'khebrat_theme'); ?></label>
                         <textarea class="form-control" id="questions" name="case_questions" rows="3" placeholder="يرجى كتابة تفاصيل الموضوع بشكل واضح ومختصر" required><?= esc_textarea(get_post_meta($lsid, '_case_questions', true)); ?></textarea>
                     </div>
 
@@ -306,14 +340,6 @@ foreach ($parent_terms as $parent) {
                 <div class="step">
                     <p class="mb-4">6/7</p>
                     <h5 class="text-center"></h5>
-
-                    <?php
-                    $is_remote_session = get_post_meta($lsid, '_is_remote_session', true);
-                    $session_location1 = get_post_meta($lsid, '_session_location_1', true);
-                    $session_location2 = get_post_meta($lsid, '_session_location_2', true);
-                    $session_date      = get_post_meta($lsid, '_session_date', true);
-                    $session_time      = get_post_meta($lsid, '_session_time', true);
-                    ?>
 
                     <!-- حضور عن بعد -->
                     <div class="mb-4">
@@ -331,10 +357,35 @@ foreach ($parent_terms as $parent) {
                     </div>
 
                     <!-- مكان الجلسة -->
-                    <div class="mb-3">
+                    <div class="mb-3 row" id="session-location-wrapper" style="display: none;">
                         <label class="form-label fw-bold">مكان الجلسة</label>
-                        <input type="text" name="session_location_1" class="form-control mb-2" placeholder="مثال: المدينة المنورة" value="<?php echo esc_attr($session_location1); ?>">
-                        <input type="text" name="session_location_2" class="form-control" placeholder="مثال: مهد الذهب" value="<?php echo esc_attr($session_location2); ?>">
+
+                        <div class="col-md-6">
+                            <label for="parent-select">المنطقة</label>
+                            <select class="form-select" name="session_location_1" id="parent-select">
+                                <option value="">-- اختر المنطقة --</option>
+                                <?php foreach ($parent_locations as $parent): ?>
+                                    <option value="<?php echo esc_attr($parent->term_id); ?>" <?php selected($parent->term_id, $saved_parent_term); ?>>
+                                        <?php echo esc_html($parent->name); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="child-select">المدينة</label>
+                            <select name="session_location_2" id="child-select" class="form-select" <?php echo empty($saved_parent_term) ? 'disabled' : ''; ?>>
+                                <option value="">-- اختر المدينة --</option>
+                                <?php
+                                if (!empty($saved_parent_term) && isset($children_by_locations[$saved_parent_term])) {
+                                    foreach ($children_by_locations[$saved_parent_term] as $child) {
+                                        $selected = ($child->term_id == $saved_child_term) ? 'selected="selected"' : '';
+                                        echo '<option value="' . esc_attr($child->term_id) . '" ' . $selected . '>' . esc_html($child->name) . '</option>';
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
                     </div>
 
                     <!-- موعد الجلسة -->
@@ -452,6 +503,7 @@ foreach ($parent_terms as $parent) {
                 const parentId = this.value;
                 childOptions.innerHTML = '';
 
+                // إظهار الأبناء
                 if (parentId && childrenByParent[parentId]) {
                     childrenByParent[parentId].forEach(function(child) {
                         const div = document.createElement('div');
@@ -473,11 +525,19 @@ foreach ($parent_terms as $parent) {
                         div.appendChild(label);
                         childOptions.appendChild(div);
                     });
+
+                    // الانتقال التلقائي للخطوة التالية
+                    if (currentStep < steps.length - 1) {
+                        currentStep++;
+                        showStep(currentStep);
+                    }
+
                 } else {
                     childOptions.innerHTML = '<p class="text-muted">يرجى اختيار التخصص أولاً</p>';
                 }
             });
         });
+
 
         // showStep(currentStep);
     });
@@ -492,30 +552,30 @@ foreach ($parent_terms as $parent) {
     //     let categoryInputs = document.querySelectorAll(".category-input");
     //     let goToStep2Btn = document.getElementById("goToStep2");
 
-    //     function showStep(stepIndex) {
-    //         steps.forEach((step, index) => {
-    //             step.classList.toggle("active", index === stepIndex);
-    //         });
-    //     }
+        function showStep(stepIndex) {
+            steps.forEach((step, index) => {
+                step.classList.toggle("active", index === stepIndex);
+            });
+        }
 
-    //     // التنقل بين الصفحات عند الضغط على زر "التالي"
-    //     nextBtns.forEach(btn => {
-    //         btn.addEventListener("click", function() {
-    //             currentStep++;
-    //             showStep(currentStep);
-    //         });
-    //     });
+        // التنقل بين الصفحات عند الضغط على زر "التالي"
+        nextBtns.forEach(btn => {
+            btn.addEventListener("click", function() {
+                currentStep++;
+                showStep(currentStep);
+            });
+        });
 
-    //     // التنقل بين الصفحات عند الضغط على زر "السابق"
-    //     prevBtns.forEach(btn => {
-    //         btn.addEventListener("click", function() {
-    //             currentStep--;
-    //             showStep(currentStep);
-    //         });
-    //     });
-
-
+        // التنقل بين الصفحات عند الضغط على زر "السابق"
+        prevBtns.forEach(btn => {
+            btn.addEventListener("click", function() {
+                currentStep--;
+                showStep(currentStep);
+            });
+        });
 
 
-    // });
+
+
+    });
 </script>

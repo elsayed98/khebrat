@@ -27,7 +27,7 @@ $cust_id = get_user_meta($current_user_id, 'customer_id', true);
 
 // التحقق إذا كان هناك lsid في الرابط
 if (isset($_GET['lsid'])) {
-    $lsid = intval($_GET['lsid']); 
+    $lsid = intval($_GET['lsid']);
 } else {
     // لا يوجد lsid في الرابط، محاولة البحث عن منشور pending
     $args = array(
@@ -127,8 +127,12 @@ foreach ($parent_terms as $parent) {
                         <label for="roleSelect">هل أنت المدعي أم المدعى عليه؟</label>
                         <?php $case_role_type = get_post_meta($lsid, '_case_role_type', true) ?>
                         <select class="form-control" name="case_role_type" id="roleSelect" onchange="toggleRole()">
-                            <option value="مدعي" <?php if ($case_role_type  == "مدعي") { echo "selected=selected"; } ?>>مدعي</option>
-                            <option value="مدعى عليه" <?php if ($case_role_type  == "مدعى عليه") {echo "selected=selected"; } ?>>مدعى عليه</option>
+                            <option value="مدعي" <?php if ($case_role_type  == "مدعي") {
+                                                        echo "selected=selected";
+                                                    } ?>>مدعي</option>
+                            <option value="مدعى عليه" <?php if ($case_role_type  == "مدعى عليه") {
+                                                            echo "selected=selected";
+                                                        } ?>>مدعى عليه</option>
                         </select>
                     </div>
 
@@ -207,19 +211,22 @@ foreach ($parent_terms as $parent) {
                             </label>
                         </div>
 
-                        <!-- إجمالي القيمة -->
-                        <div class="mb-3">
-                            <label class="form-label text-danger fw-bold">إجمالي قيمة المطالبات؟ - مطلوب</label>
-                            <input type="number" name="total_claim_value" value="<?php echo esc_attr($total_claim_value); ?>" class="form-control" placeholder="إضافة الاجمالي بالريال" required>
+                        <!-- هذه الحقول سيتم إخفاؤها أو إظهارها -->
+                        <div id="financial_fields" style="display: <?php echo ($is_financial_case == 'yes') ? 'block' : 'none'; ?>;">
+                            <!-- إجمالي القيمة -->
+                            <div class="mb-3">
+                                <label class="form-label">إجمالي قيمة المطالبات؟ - مطلوب</label>
+                                <input type="number" name="total_claim_value" value="<?php echo esc_attr($total_claim_value); ?>" class="form-control" placeholder="إضافة الاجمالي بالريال">
+                            </div>
+
+                            <!-- وصف المطالبات -->
+                            <div class="mb-3">
+                                <label class="form-label">وصف المطالبات - مطلوب</label>
+                                <textarea name="claims_description" class="form-control" rows="3" placeholder="يرجى وصف المطالبات بشكل مختصر وواضح..."><?php echo esc_textarea($claims_description); ?></textarea>
+                            </div>
                         </div>
 
-                        <!-- وصف المطالبات -->
-                        <div class="mb-3">
-                            <label class="form-label text-danger fw-bold">وصف المطالبات - مطلوب</label>
-                            <textarea name="claims_description" class="form-control" rows="3" placeholder="يرجى وصف المطالبات بشكل مختصر وواضح..." required><?php echo esc_textarea($claims_description); ?></textarea>
-                        </div>
 
-                        
 
                         <script>
                             function toggleRole() {
@@ -236,7 +243,23 @@ foreach ($parent_terms as $parent) {
                                     document.getElementById("defendantPlaintiffRole").style.display = "block";
                                 }
                             }
+
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const radios = document.querySelectorAll('input[name="is_financial_case"]');
+                                const financialFields = document.getElementById('financial_fields');
+
+                                radios.forEach(radio => {
+                                    radio.addEventListener('change', function() {
+                                        if (this.value === 'yes') {
+                                            financialFields.style.display = 'block';
+                                        } else {
+                                            financialFields.style.display = 'none';
+                                        }
+                                    });
+                                });
+                            });
                         </script>
+
                     </div>
 
                     <div class="d-flex justify-content-between mt-4">
@@ -300,24 +323,24 @@ foreach ($parent_terms as $parent) {
                     </div>
 
                     <script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                const radioGroups = document.querySelectorAll('input[type="radio"][class="d-none"]');
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const radioGroups = document.querySelectorAll('input[type="radio"][class="d-none"]');
 
-                                radioGroups.forEach(radio => {
-                                    radio.addEventListener('change', function() {
-                                        // إزالة "active" من كل العناصر
-                                        radioGroups.forEach(r => {
-                                            r.closest('label').classList.remove('active');
-                                        });
-
-                                        // إضافة "active" للي تم اختياره
-                                        if (this.checked) {
-                                            this.closest('label').classList.add('active');
-                                        }
+                            radioGroups.forEach(radio => {
+                                radio.addEventListener('change', function() {
+                                    // إزالة "active" من كل العناصر
+                                    radioGroups.forEach(r => {
+                                        r.closest('label').classList.remove('active');
                                     });
+
+                                    // إضافة "active" للي تم اختياره
+                                    if (this.checked) {
+                                        this.closest('label').classList.add('active');
+                                    }
                                 });
                             });
-                        </script>
+                        });
+                    </script>
 
 
                     <div class="d-flex justify-content-between mt-4">

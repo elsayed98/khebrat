@@ -27,7 +27,7 @@ $cust_id = get_user_meta($current_user_id, 'customer_id', true);
 
 // التحقق إذا كان هناك lsid في الرابط
 if (isset($_GET['lsid'])) {
-    $lsid = intval($_GET['lsid']); 
+    $lsid = intval($_GET['lsid']);
 } else {
     // لا يوجد lsid في الرابط، محاولة البحث عن منشور pending
     $args = array(
@@ -89,6 +89,33 @@ foreach ($parent_terms as $parent) {
     $children_by_parent[$parent->term_id] = $children;
 }
 
+$session_location1 = get_post_meta($lsid, '_session_location_1', true);
+$session_location2 = get_post_meta($lsid, '_session_location_2', true);
+$taxonomy = 'customer-locations'; // ← غيّرها حسب التصنيف الخاص بك
+$terms = get_terms([
+    'taxonomy' => $taxonomy,
+    'hide_empty' => false,
+]);
+
+$parent_terms = [];
+$children_by_parent = [];
+
+foreach ($terms as $term) {
+    if ($term->parent == 0) {
+        $parent_terms[] = $term;
+    } else {
+        $children_by_parent[$term->parent][] = $term;
+    }
+}
+
+// استرجاع التصنيف الابن المحفوظ وتحديد التصنيف الأب
+$saved_child_term = $session_location2;
+$saved_parent_term = '';
+if ($saved_child_term) {
+    $child_term = get_term($saved_child_term);
+    $saved_parent_term = $child_term ? $child_term->parent : '';
+}
+
 
 ?>
 
@@ -112,11 +139,10 @@ foreach ($parent_terms as $parent) {
                     <?php
                     $gov_name = get_post_meta($lsid, '_gov_name', true);
 
-                    $session_location1 = get_post_meta($lsid, '_session_location_1', true);
-                    $session_location2 = get_post_meta($lsid, '_session_location_2', true);
+                    
                     $session_date      = get_post_meta($lsid, '_session_date', true);
                     $session_time      = get_post_meta($lsid, '_session_time', true);
-                    $review_reason = get_post_meta($lsid, '_review_reason', true);
+                    $review_reason = get_post_meta($lsid, '_case_subject', true);
 
                     ?>
 
@@ -128,16 +154,43 @@ foreach ($parent_terms as $parent) {
                     </div>
 
                     <!-- الموقع -->
-                    <div class="mb-3">
+                    <div class="row mb-3">
                         <label class="form-label fw-bold">الموقع</label>
-                        <input type="text" name="session_location_1" class="form-control mb-2" value="<?php echo esc_attr($session_location1); ?>">
-                        <input type="text" name="session_location_2" class="form-control" value="<?php echo esc_attr($session_location2); ?>">
+                        <div class="col-md-6">
+                            <label for="parent-select">المنطقة</label>
+                            <select class="form-select" name="session_location_1" id="parent-select">
+                                <option value="">-- اختر المنطقة --</option>
+                                <?php foreach ($parent_terms as $parent): ?>
+                                    <option value="<?php echo esc_attr($parent->term_id); ?>" <?php selected($parent->term_id, $saved_parent_term); ?>>
+                                        <?php echo esc_html($parent->name); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="child-select">المدينة</label>
+                            <select name="session_location_2" id="child-select" class="form-select" <?php echo empty($saved_parent_term) ? 'disabled' : ''; ?>>
+                                <option value="">-- اختر المدينة --</option>
+                                <?php
+                                if (!empty($saved_parent_term) && isset($children_by_parent[$saved_parent_term])) {
+                                    foreach ($children_by_parent[$saved_parent_term] as $child) {
+                                        $selected = ($child->term_id == $saved_child_term) ? 'selected="selected"' : '';
+                                        echo '<option value="' . esc_attr($child->term_id) . '" ' . $selected . '>' . esc_html($child->name) . '</option>';
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+
                     </div>
+
+
 
                     <!-- سبب المراجعة والمطلوب تنفيذه -->
                     <div class="mb-3">
                         <label class="form-label fw-bold">سبب المراجعة والمطلوب تنفيذه</label>
-                        <textarea name="review_reason" rows="4" class="form-control"><?php echo esc_textarea($review_reason); ?></textarea>
+                        <textarea name="case_subject" rows="4" class="form-control"><?php echo esc_textarea($review_reason); ?></textarea>
                     </div>
 
                     <!-- موعد الجلسة -->
@@ -222,6 +275,32 @@ foreach ($parent_terms as $parent) {
 
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const parentSelect = document.getElementById('parent-select');
+        const childSelect = document.getElementById('child-select');
+
+        const childrenByParent = <?php echo json_encode($children_by_parent); ?>;
+
+        parentSelect.addEventListener('change', function() {
+            const parentId = this.value;
+
+            // حذف الخيارات القديمة
+            childSelect.innerHTML = '<option value="">-- اختر المدينة --</option>';
+
+            if (parentId && childrenByParent[parentId]) {
+                childSelect.disabled = false;
+                childrenByParent[parentId].forEach(function(child) {
+                    const option = document.createElement('option');
+                    option.value = child.term_id;
+                    option.textContent = child.name;
+                    childSelect.appendChild(option);
+                });
+            } else {
+                childSelect.disabled = true;
+            }
+        });
+    });
+
     document.addEventListener('DOMContentLoaded', function() {
         let currentStep = 0;
         const steps = document.querySelectorAll('.step');

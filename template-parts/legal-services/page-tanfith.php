@@ -1,6 +1,6 @@
 <?php
 //صفحة - طلبات التنفيذ
- 
+
 
 
 
@@ -28,7 +28,7 @@ $cust_id = get_user_meta($current_user_id, 'customer_id', true);
 
 // التحقق إذا كان هناك lsid في الرابط
 if (isset($_GET['lsid'])) {
-    $lsid = intval($_GET['lsid']); 
+    $lsid = intval($_GET['lsid']);
 } else {
     // لا يوجد lsid في الرابط، محاولة البحث عن منشور pending
     $args = array(
@@ -109,20 +109,19 @@ foreach ($parent_terms as $parent) {
 
                     <div class="row">
 
-
-
                         <!-- حقول المدعي -->
-                        <div class="form-group" id="plaintiffFields">
+                        <div class="form-group">
                             <label for="plaintiffRole">صفتك كمدعي:</label>
-                            <select class="form-control" name="plaintiff_identity_type" id="plaintiffRole">
+                            <input type="hidden" name="case_role_type" value="مدعى عليه" />
+                            <select class="form-control" name="defendant_identity_type">
                                 <option value="فرد">فرد</option>
                                 <option value="منشأة">منشأة</option>
                             </select>
                         </div>
 
-                        <div class="form-group" id="plaintiffDefendantRole">
+                        <div class="form-group">
                             <label for="defendantRoleAsPlaintiff">صفة المدعي عليه :</label>
-                            <select class="form-control" name="defendant_identity_type_by_plaintiff" id="defendantRoleAsPlaintiff">
+                            <select class="form-control" name="plaintiff_identity_type_by_defendant">
                                 <option value="فرد">فرد</option>
                                 <option value="منشأة">منشأة</option>
                                 <option value="جهة حكومية">جهة حكومية</option>
@@ -196,13 +195,8 @@ foreach ($parent_terms as $parent) {
                     </div>
 
                     <div class="form-group">
-                        <label for="caseSubject">موضوع القضية</label>
+                        <label for="caseSubject"><?php echo esc_html__('موضوع السند التفيذي', 'khebrat_theme'); ?></label>
                         <textarea class="form-control" id="caseSubject" name="case_subject" rows="3" placeholder="يرجى كتابة تفاصيل الموضوع بشكل واضح ومختصر" required><?= esc_textarea(get_post_meta($lsid, '_case_subject', true)); ?></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="questions">الأشياء التي تبحث عنها إجابات لها من خلال هذه الدراسة</label>
-                        <textarea class="form-control" id="questions" name="case_questions" rows="3" placeholder="يرجى كتابة تفاصيل الموضوع بشكل واضح ومختصر" required><?= esc_textarea(get_post_meta($lsid, '_case_questions', true)); ?></textarea>
                     </div>
 
                     <div class="d-flex justify-content-between mt-4">
@@ -268,40 +262,7 @@ foreach ($parent_terms as $parent) {
                         </label>
                     </div>
 
-                    <!-- JavaScript لإظهار الحقول -->
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            const submittedYes = document.getElementById('submitted_yes');
-                            const submittedNo = document.getElementById('submitted_no');
-                            const decision34Wrapper = document.getElementById('decision34_wrapper');
 
-                            const decision34Yes = document.getElementById('decision34_yes');
-                            const decision34No = document.getElementById('decision34_no');
-                            const decision46Wrapper = document.getElementById('decision46_wrapper');
-
-                            function toggleDecisionFields() {
-                                if (submittedYes.checked) {
-                                    decision34Wrapper.style.display = 'block';
-                                } else {
-                                    decision34Wrapper.style.display = 'none';
-                                    decision46Wrapper.style.display = 'none';
-                                }
-
-                                if (decision34Yes.checked) {
-                                    decision46Wrapper.style.display = 'block';
-                                } else {
-                                    decision46Wrapper.style.display = 'none';
-                                }
-                            }
-
-                            submittedYes.addEventListener('change', toggleDecisionFields);
-                            submittedNo.addEventListener('change', toggleDecisionFields);
-                            if (decision34Yes) decision34Yes.addEventListener('change', toggleDecisionFields);
-                            if (decision34No) decision34No.addEventListener('change', toggleDecisionFields);
-
-                            toggleDecisionFields(); // تنفيذ عند التحميل
-                        });
-                    </script>
 
 
                     <div class="d-flex justify-content-between mt-4">
@@ -371,7 +332,40 @@ foreach ($parent_terms as $parent) {
 
 
 
+<!-- JavaScript لإظهار الحقول -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const submittedYes = document.getElementById('submitted_yes');
+        const submittedNo = document.getElementById('submitted_no');
+        const decision34Wrapper = document.getElementById('decision34_wrapper');
 
+        const decision34Yes = document.getElementById('decision34_yes');
+        const decision34No = document.getElementById('decision34_no');
+        const decision46Wrapper = document.getElementById('decision46_wrapper');
+
+        function toggleDecisionFields() {
+            if (submittedYes.checked) {
+                decision34Wrapper.style.display = 'block';
+            } else {
+                decision34Wrapper.style.display = 'none';
+                decision46Wrapper.style.display = 'none';
+            }
+
+            if (decision34Yes.checked) {
+                decision46Wrapper.style.display = 'block';
+            } else {
+                decision46Wrapper.style.display = 'none';
+            }
+        }
+
+        submittedYes.addEventListener('change', toggleDecisionFields);
+        submittedNo.addEventListener('change', toggleDecisionFields);
+        if (decision34Yes) decision34Yes.addEventListener('change', toggleDecisionFields);
+        if (decision34No) decision34No.addEventListener('change', toggleDecisionFields);
+
+        toggleDecisionFields(); // تنفيذ عند التحميل
+    });
+</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -476,17 +470,23 @@ foreach ($parent_terms as $parent) {
 
     // });
     document.addEventListener('DOMContentLoaded', function() {
-        const radioGroups = document.querySelectorAll('input[type="radio"][class="d-none"]');
+        // الحصول على كل أسماء مجموعات الراديو المختلفة
+        const radioButtons = document.querySelectorAll('input[type="radio"]');
 
-        radioGroups.forEach(radio => {
+        radioButtons.forEach(radio => {
             radio.addEventListener('change', function() {
-                // إزالة "active" من كل العناصر
-                radioGroups.forEach(r => {
-                    r.closest('label').classList.remove('active');
+                const name = this.name;
+                const group = document.querySelectorAll(`input[type="radio"][name="${name}"]`);
+
+                // إزالة class 'active' من كل العناصر في نفس المجموعة
+                group.forEach(r => {
+                    if (r.closest('label')) {
+                        r.closest('label').classList.remove('active');
+                    }
                 });
 
-                // إضافة "active" للي تم اختياره
-                if (this.checked) {
+                // إضافة class 'active' للراديو المختار
+                if (this.checked && this.closest('label')) {
                     this.closest('label').classList.add('active');
                 }
             });

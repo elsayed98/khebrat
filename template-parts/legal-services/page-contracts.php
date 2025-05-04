@@ -26,7 +26,7 @@ $cust_id = get_user_meta($current_user_id, 'customer_id', true);
 
 // التحقق إذا كان هناك lsid في الرابط
 if (isset($_GET['lsid'])) {
-    $lsid = intval($_GET['lsid']); 
+    $lsid = intval($_GET['lsid']);
 } else {
     // لا يوجد lsid في الرابط، محاولة البحث عن منشور pending
     $args = array(
@@ -225,7 +225,7 @@ foreach ($parent_terms as $parent) {
 
                 <!-- الصفحة 1:  -->
                 <div class="step">
-                    <p class="mb-4">3/7</p>
+                    <p class="mb-4">4/7</p>
                     <h5 class="text-center"></h5>
 
                     <div class="mb-4">
@@ -275,7 +275,7 @@ foreach ($parent_terms as $parent) {
 
                 <!-- الصفحة 2:  -->
                 <div class="step">
-                    <p class="mb-4">3/7</p>
+                    <p class="mb-4">5/7</p>
                     <h5 class="text-center"></h5>
 
                     <div class="mb-4">
@@ -393,10 +393,30 @@ foreach ($parent_terms as $parent) {
 
 
 
+                <!-- الصفحة 6:  -->
+                <div class="step">
+                    <p class="mb-4">6/7</p>
+                    <h5 class="text-center"></h5>
 
+                    <div class="form-group">
+                        <label for="requestTitle">عنوان الطلب</label>
+                        <input type="text" class="form-control" id="requestTitle" name="request_title" value="<?php echo get_post_meta($lsid, '_request_title', true); ?>" placeholder="يرجى كتابة عنوان الطلب بشكل واضح ومختصر" required></input>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="caseSubject">موضوع الخدمة</label>
+                        <textarea class="form-control" id="caseSubject" name="case_subject" rows="3" placeholder="يرجى كتابة تفاصيل الموضوع بشكل واضح ومختصر" required><?= esc_textarea(get_post_meta($lsid, '_case_subject', true)); ?></textarea>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <button type="button" class="btn btn-secondary prevBtn">السابق</button>
+                        <button type="button" class="btn btn-primary nextBtn">التالي</button>
+                    </div>
+                </div>
 
                 <div class="step">
-                    <p class="mb-4">5/7</p>
+                    <p class="mb-4">7/7</p>
                     <h5 class="text-center"></h5>
 
 
@@ -568,27 +588,27 @@ foreach ($parent_terms as $parent) {
 
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    // الحصول على كل أسماء مجموعات الراديو المختلفة
-    const radioButtons = document.querySelectorAll('input[type="radio"]');
+    document.addEventListener('DOMContentLoaded', function() {
+        // الحصول على كل أسماء مجموعات الراديو المختلفة
+        const radioButtons = document.querySelectorAll('input[type="radio"]');
 
-    radioButtons.forEach(radio => {
-      radio.addEventListener('change', function () {
-        const name = this.name;
-        const group = document.querySelectorAll(`input[type="radio"][name="${name}"]`);
+        radioButtons.forEach(radio => {
+            radio.addEventListener('change', function() {
+                const name = this.name;
+                const group = document.querySelectorAll(`input[type="radio"][name="${name}"]`);
 
-        // إزالة class 'active' من كل العناصر في نفس المجموعة
-        group.forEach(r => {
-          if (r.closest('label')) {
-            r.closest('label').classList.remove('active');
-          }
+                // إزالة class 'active' من كل العناصر في نفس المجموعة
+                group.forEach(r => {
+                    if (r.closest('label')) {
+                        r.closest('label').classList.remove('active');
+                    }
+                });
+
+                // إضافة class 'active' للراديو المختار
+                if (this.checked && this.closest('label')) {
+                    this.closest('label').classList.add('active');
+                }
+            });
         });
-
-        // إضافة class 'active' للراديو المختار
-        if (this.checked && this.closest('label')) {
-          this.closest('label').classList.add('active');
-        }
-      });
     });
-  });
 </script>

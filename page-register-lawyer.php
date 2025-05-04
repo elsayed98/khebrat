@@ -175,8 +175,6 @@ if (!is_user_logged_in()) {
 						<input type="text" class="form-control" name="license_number" required data-smk-msg="يرجى إدخال رقم الرخصة">
 					</div>
 
-
-
 					<div class="mb-3 form-check">
 						<input type="checkbox" class="form-check-input" required name="term_condition">
 						<label class="form-check-label">
@@ -238,53 +236,6 @@ if (!is_user_logged_in()) {
 			});
 		});
 
-
-		/*
-				document.addEventListener('DOMContentLoaded', function() {
-					const input = document.getElementById('pdf_file');
-					const hiddenInput = document.getElementById('uploaded_pdf_url');
-					const nameFile = document.getElementById('name_file');
-					const freelanceAjaxURL = document.getElementById('freelance_ajax_url')?.value || '/wp-admin/admin-ajax.php';
-
-					input.value = '';
-
-					input.addEventListener('change', function(e) {
-						const file = e.target.files[0];
-
-						if (!file || file.type !== 'application/pdf') {
-							toastr.error('❌ الرجاء اختيار ملف PDF فقط.');
-							return;
-						}
-
-						const formData = new FormData();
-						formData.append('file', file);
-						formData.append('action', 'upload_pdf_to_media');
-
-						fetch(freelanceAjaxURL, {
-								method: 'POST',
-								body: formData
-							})
-							.then(response => response.json())
-							.then(data => {
-								console.log('📦 الرد:', data);
-
-								if (data.success && data.data && data.data.attachment_id) {
-									hiddenInput.value = data.data.attachment_id;
-									nameFile.textContent = file.name;
-									toastr.success('✅ تم رفع الملف بنجاح.');
-								} else {
-									toastr.error(data.message || '❌ فشل رفع الملف.');
-								}
-
-								input.value = '';
-							})
-							.catch(err => {
-								console.error('❌ خطأ في الرفع:', err);
-								toastr.error('⚠️ حدث خطأ أثناء رفع الملف.');
-								input.value = '';
-							});
-					});
-				});*/
 	</script>
 
 
