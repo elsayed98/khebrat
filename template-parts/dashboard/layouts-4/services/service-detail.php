@@ -1,9 +1,7 @@
 <?php global $khebrat_theme_options;
 $current_user_id = get_current_user_id();
 
-$con_id = $_GET['cid'];
-
-
+$service_id = $_GET['lsid'];
 
 if (is_user_logged_in()) {
     $lawyer_id = get_user_meta($current_user_id, 'lawyer_id', true);
@@ -11,20 +9,24 @@ if (is_user_logged_in()) {
 
 
 
-    if (isset($_GET['cid']) && !empty($_GET['cid'])) {
-        $cust_id = get_post_field('post_author', $con_id);
+    if (isset($_GET['lsid']) && !empty($_GET['lsid'])) {
+        $cust_id = get_post_field('post_author', $service_id);
         $customer_id_msg = get_user_meta($cust_id, 'customer_id', true);;
 
-        $lawyer_id_msg = get_post_meta($con_id, '_lawyer_id', true);
-        $consul_status = get_post_meta($con_id, '_legal_consultation_status', true);
-        switch ($consul_status) {
+        $offer_id = get_post_meta($service_id, '_accepted_offer', true);
+        $offer_author = get_post_field('post_author', $offer_id);
+        $lawyer_id_msg = get_user_meta($offer_author, 'lawyer_id', true);;
+        
+
+        $service_status = get_post_meta($service_id, '_legal_services_status', true);
+        switch ($service_status) {
             case 'active':
                 $status_label = 'نشط';
                 break;
             case 'completed':
                 $status_label = 'مكتمل';
                 break;
-            case 'processing':
+            case 'progress':
                 $status_label = 'قيد التنفيذ';
                 break;
             default:
@@ -45,7 +47,7 @@ if (is_user_logged_in()) {
                             <div class="d-flex justify-content-between align-items-start mb-4">
                                 <div class="d-flex align-items-center gap-3">
                                     <i class="bi bi-journal-text fs-3 text-primary"></i>
-                                    <h2 class="fs-3 mb-0">تفاصيل الاستشارة</h2>
+                                    <h2 class="fs-3 mb-0">تفاصيل الطلب</h2>
                                 </div>
                                 <div>
                                     <span class="badge status-badge px-4 py-2 rounded-pill">
@@ -55,10 +57,10 @@ if (is_user_logged_in()) {
                             </div>
 
                             <div class="mb-4">
-                                <h3 class="text-dark fw-bold"><?php echo get_the_title($con_id); ?></h3>
+                                <h3 class="text-dark fw-bold"><?php echo get_the_title($service_id); ?></h3>
                                 <div class="mt-3">
                                     <?php
-                                    $terms = wp_get_object_terms($con_id, 'legal_category');
+                                    $terms = wp_get_object_terms($service_id, 'legal_category');
                                     if (!empty($terms) && !is_wp_error($terms)) {
                                         foreach ($terms as $term) {
                                             echo '<span class="badge bg-light text-dark border me-2 mb-2 px-3 py-2 rounded-pill shadow-sm">' . esc_html($term->name) . '</span>';
@@ -74,15 +76,15 @@ if (is_user_logged_in()) {
 
                             <div class="d-flex justify-content-between align-items-center">
                                 <h5 class="text-muted mb-0"><i class="bi bi-person-lines-fill me-2"></i>تفاصيل المستفيد</h5>
-                                <?php if ($consul_status == 'active') : ?>
-                                    <button class="vip-btn btn-consultation-action" data-id="<?php echo esc_attr($con_id); ?>" data-status="processing" data-posttype="<?php echo get_post_type(get_the_ID()); ?>">
+                                <?php if ($service_status == 'active') : ?>
+                                    <button class="vip-btn btn-consultation-action" data-id="<?php echo esc_attr($service_id); ?>" data-status="processing">
                                         <i class="bi bi-play-fill me-2"></i> بدء الاستشارة
                                     </button>
                                 <?php endif; ?>
                             </div>
                         </div>
 
-                        <?php if ($consul_status != 'active') : ?>
+                        <?php if ($service_status != 'active') : ?>
                             <div class="row ">
                                 <div class="col-md-12 grid-margin stretch-card services ongoing-services-details">
                                     <div class="card mb-4 shadow">
@@ -96,7 +98,7 @@ if (is_user_logged_in()) {
                                                     <div class="history-body border rounded p-3 ">
                                                         <div class="history-chat-body">
                                                             <?php
-                                                            $messages = get_service_msg($con_id);
+                                                            $messages = get_service_msg($service_id);
                                                             if ($messages) {
                                                                 foreach ($messages as $message) {
                                                                     $msg_author = get_user_meta($current_user_id, 'lawyer_id', true);
@@ -174,7 +176,7 @@ if (is_user_logged_in()) {
                                                     </div>
                                                 </div>
 
-                                                <?php if ($consul_status != 'completed') : ?>
+                                                <?php if ($service_status != 'completed') : ?>
                                                     <div class="history-msg-form">
                                                         <h3><?php echo esc_html__('Send Message', 'khebrat_theme'); ?></h3>
                                                         <div class="history-text">
@@ -199,7 +201,7 @@ if (is_user_logged_in()) {
                                                                 <div class="collapse show" id="collapseComment">
                                                                     <div class="d-flex mt-3">
                                                                         <textarea class="form-control mb-0" name="history_msg_text" id="" required data-smk-msg="<?php echo esc_attr__('Please provide message to send', 'khebrat_theme'); ?>" placeholder="<?php echo esc_attr__('Type your message here.....', 'khebrat_theme'); ?>"></textarea>
-                                                                        <button type="button" class="btn btn-sm btn-primary ms-2 px-4 mb-0 flex-shrink-0" id="service_history_msg_btn" data-post-id="<?php echo esc_attr($con_id) ?>" data-sender-id="<?php echo esc_attr($lawyer_id_msg) ?>" data-receiver-id="<?php echo esc_attr($customer_id_msg) ?>"><i class="fas fa-paper-plane fs-5"></i></button>
+                                                                        <button type="button" class="btn btn-sm btn-primary ms-2 px-4 mb-0 flex-shrink-0" id="service_history_msg_btn" data-post-id="<?php echo esc_attr($service_id) ?>" data-sender-id="<?php echo esc_attr($lawyer_id_msg) ?>" data-receiver-id="<?php echo esc_attr($customer_id_msg) ?>"><i class="fas fa-paper-plane fs-5"></i></button>
                                                                     </div>
                                                                 </div>
 

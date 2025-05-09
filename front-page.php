@@ -10,7 +10,7 @@
  */
 
 
-    // hatem_debug(Hatem_get_post_withFilds());
+// hatem_debug(Hatem_get_post_withFilds());
 ?>
 
 
@@ -145,38 +145,7 @@ if (have_posts()) {
         </div>
     </section>
     <style>
-        /* تعديل لتثبيت المودال في الأسفل */
-        .modal-bottom-sheet {
-            position: fixed;
-            bottom: 0;
-            margin: 0;
-            width: 100%;
-            max-width: 100%;
-            transform: translateY(100%);
-            transition: transform 0.4s ease;
-        }
-
-        /* عند العرض */
-        .modal.fade.show .modal-bottom-sheet {
-            transform: translateY(33vh);
-            /* 100% - 66vh = يظهر 2/3 */
-        }
-
-        /* جعل المحتوى يأخذ 2/3 من ارتفاع الشاشة */
-        .modal-content {
-            height: 66vh;
-            border-radius: 16px 16px 0 0;
-            overflow-y: auto;
-        }
-
-        /* تحكم في الدخول من الأسفل */
-        .modal.fade .modal-dialog {
-            transform: translateY(100%);
-        }
-
-        .modal.fade.show .modal-dialog {
-            transform: translateY(0);
-        }
+        
     </style>
 
     <!-- المودال -->
@@ -198,13 +167,11 @@ if (have_posts()) {
                                             <h5 class="fw-bold mb-0">عن طريق محادثه نصيه</h5>
                                             <i class="bi bi-chat-right-text-fill fs-4 text-secondary"></i>
                                         </div>
-                                        <p class="mb-3">
-                                            لطلب استشارة قانونية وطرح الأسئلة في موضوع معين بمحادثة نصية. المحادثة تدعم الرسائل الكتابية والرسائل الصوتية وإرسال الصور والمستندات ولا تدعم الاتصال.
-                                        </p>
+                                        <p class="mb-3">لطلب استشارة قانونية وطرح الأسئلة في موضوع معين بمحادثة نصية. المحادثة تدعم الرسائل الكتابية والرسائل الصوتية وإرسال الصور والمستندات ولا تدعم الاتصال.</p>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <span class="text-muted">تبدأ من 100 ر.س</span>
-                                        <a href="#" class="text-primary text-decoration-none">
+                                        <span class="text-muted">تبدأ من 100 <i class="icon-saudi_riyal"></i></span>
+                                        <a href="<?php echo get_the_permalink($khebrat_theme_options['form_legal_consultation']) ?>" class="text-primary text-decoration-none">
                                             <i class="bi bi-arrow-left ms-1"></i>ابدأ الآن
                                         </a>
                                     </div>
@@ -224,7 +191,7 @@ if (have_posts()) {
                                         </p>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <span class="text-muted">تبدأ من 150 ر.س</span>
+                                        <span class="text-muted">تبدأ من 150 <i class="icon-saudi_riyal"></i></span>
                                         <a href="#" class="text-primary text-decoration-none">
                                             <i class="bi bi-arrow-left ms-1"></i>ابدأ الآن
                                         </a>
@@ -242,100 +209,53 @@ if (have_posts()) {
         <div class="container">
             <h3>خدمات اخري</h3>
             <div class="row g-4">
+                <?php
+                $excluded_page_id = $khebrat_theme_options['form_legal_consultation'];
 
-
-                <!-- Category item -->
-                <div class="col-sm-6 col-lg-4 col-xl-3">
-                    <div class="card card-body shadow rounded-3">
-                        <div class="d-flex align-items-center">
-                            <!-- Icon -->
-                            <div class="icon-lg  bg-opacity-10 rounded-circle text-primary"><i class="fas fa-business-time"></i></div>
-                            <div class="ms-3">
-                                <h5 class="mb-0"><a  href="<?php echo get_page_link(31) ?>" class="stretched-link">دارسة قضاية</a></h5>
-                                <p class="small">اذا كان موضعك يحتوي علي الكثير من التفاصيل و العقود و المرفقات و صكوك الاحكام المطلوب دراستها للوصول للاجابات التي تحتاجها. و تحتاج اجابات دقيقة بخصوص موضوعك.</p>
-                                <span>تبدا من 500 ر.س</span>
+                $args = array(
+                    'post_type'      => 'page',
+                    'posts_per_page' => -1,
+                    'post__not_in'   => array($excluded_page_id),
+                    'orderby'        => 'date',
+                    'order'          => 'ASC',
+                    'meta_query'     => array(
+                        array(
+                            'key'     => '_wp_page_template',
+                            'value'   => 'legal-services-form.php',
+                            'compare' => '='
+                        )
+                    )
+                );
+                $query = new WP_Query($args);
+                if ($query->have_posts()) :
+                    while ($query->have_posts()) : $query->the_post();
+                    $service_details = get_post_meta(get_the_ID(), '_service_details', true);
+                    $price = get_post_meta(get_the_ID(), '_service_price', true);
+                    ?>
+                        <div class="col-sm-6 col-lg-4 col-xl-4">
+                            <div class="card card-body shadow rounded-3">
+                                <div class="d-flex align-items-center">
+                                    <!-- Icon -->
+                                    <div class="icon-lg bg-opacity-10 rounded-circle text-primary">
+                                        <i class="fas fa-business-time"></i>
+                                    </div>
+                                    <div class="ms-3">
+                                        <h5 class="mb-0">
+                                            <a href="<?php the_permalink(); ?>" class="stretched-link"><?php the_title(); ?></a>
+                                        </h5>
+                                        <p class="small"><?php echo esc_html($service_details); ?></p>
+                                        <?php if ($price): ?>
+                                            <span>تبدأ من <?php khebrat_price_icon(get_the_ID(), '_service_price'); ?></span>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 col-xl-3">
-                    <div class="card card-body shadow rounded-3">
-                        <div class="d-flex align-items-center">
-                            <!-- Icon -->
-                            <div class="icon-lg  bg-opacity-10 rounded-circle text-primary"><i class="fas fa-business-time"></i></div>
-                            <div class="ms-3">
-                                <h5 class="mb-0"><a  href="<?php echo get_page_link(80) ?>" class="stretched-link">حضور الجلسات </a></h5>
-                                <p class="small">اذا كنت مشغول, حصل لك ظرف او ما عندك رغبة تحضر الجلسة لاي سبب كان. وكل محامي/ة يحضر  الجلسة عندك</p>
-                                <span>تبدا من 500  <?php echo do_shortcode( '[hatem_sar_sb]' ) ?></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 col-xl-3">
-                    <div class="card card-body shadow rounded-3">
-                        <div class="d-flex align-items-center">
-                            <!-- Icon -->
-                            <div class="icon-lg  bg-opacity-10 rounded-circle text-primary"><i class="fas fa-business-time"></i></div>
-                            <div class="ms-3">
-                                <h5 class="mb-0"><a  href="<?php echo get_page_link(82) ?>" class="stretched-link"><?php echo get_the_title(82) ?></a></h5>
-                                <p class="small">صياغة اللوائح و المذكرات الجوابية الاعتراضية وصحائف الدعوي و النقض الاتماس و غيرها من الخطابات بطريقة قانونية سليمة</p>
-                                <span>تبدا من 500  <?php echo do_shortcode( '[hatem_sar_sb]' ) ?></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 col-xl-3">
-                    <div class="card card-body shadow rounded-3">
-                        <div class="d-flex align-items-center">
-                            <!-- Icon -->
-                            <div class="icon-lg  bg-opacity-10 rounded-circle text-primary"><i class="fas fa-business-time"></i></div>
-                            <div class="ms-3">
-                                <h5 class="mb-0"><a  href="<?php echo get_page_link(84) ?>" class="stretched-link">طلبات التنفيذ</a></h5>
-                                <p class="small">رفع طلب التنفيذ و/ أو متابعة الاجراءات حتي اخر اجراء صد المنفذ ضده امام محكمة التنفيذ</p>
-                                <span>تبدا من 500  <?php echo do_shortcode( '[hatem_sar_sb]' ) ?></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 col-xl-3">
-                    <div class="card card-body shadow rounded-3">
-                        <div class="d-flex align-items-center">
-                            <!-- Icon -->
-                            <div class="icon-lg  bg-opacity-10 rounded-circle text-primary"><i class="fas fa-business-time"></i></div>
-                            <div class="ms-3">
-                                <h5 class="mb-0"><a  href="<?php echo get_page_link(87) ?>" class="stretched-link">العقود و الاتفاقات</a></h5>
-                                <p class="small">العقد شريعة المتعاقدين , صياغة و مراجعة العقود و الاتفاقيات و دراسة العقود و البحث في امكانية فسخها</p>
-                                <span>تبدا من 500  <?php echo do_shortcode( '[hatem_sar_sb]' ) ?></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 col-xl-3">
-                    <div class="card card-body shadow rounded-3">
-                        <div class="d-flex align-items-center">
-                            <!-- Icon -->
-                            <div class="icon-lg  bg-opacity-10 rounded-circle text-primary"><i class="fas fa-business-time"></i></div>
-                            <div class="ms-3">
-                                <h5 class="mb-0"><a  href="<?php echo get_page_link(89) ?>" class="stretched-link">تسجيل العلامات التجارية</a></h5>
-                                <p class="small">تقديم طلب تسجيل علامة تجارية للهئية السعودية للملكية الفكرية و متابعة الطلب حتي يتم النشر</p>
-                                <span>تبدا من 500  <?php echo do_shortcode( '[hatem_sar_sb]' ) ?></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 col-xl-3">
-                    <div class="card card-body shadow rounded-3">
-                        <div class="d-flex align-items-center">
-                            <!-- Icon -->
-                            <div class="icon-lg  bg-opacity-10 rounded-circle text-primary"><i class="fas fa-business-time"></i></div>
-                            <div class="ms-3">
-                                <h5 class="mb-0"><a  href="<?php echo get_page_link(93) ?>" class="stretched-link">خدمات اخري</a></h5>
-                                <p class="small">اي خدمات قانوية اخري ترغب في توكيلها للمحامي او الحصول عليها من محامي, قم بطرح موضوعك هنا و حدد نوع الخدمة المطلوبة </p>
-                                <span>تبدا من 500  <?php echo do_shortcode( '[hatem_sar_sb]' ) ?></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                    endwhile;
+                    wp_reset_postdata();
+                endif;
+                ?>
 
             </div>
         </div>

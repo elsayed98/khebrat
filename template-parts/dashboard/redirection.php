@@ -406,6 +406,10 @@ else if(isset($active_profile)  && $active_profile == 3)
 		{
 			get_template_part('template-parts/dashboard/layouts-3/services/offer-detail');
 		}
+		else if($page_type == "service-detail")
+		{
+			get_template_part('template-parts/dashboard/layouts-3/services/service-detail');
+		}
 		else if($page_type == "consultations")
 		{
 			get_template_part('template-parts/dashboard/layouts-3/consultations/consultations');
@@ -414,10 +418,7 @@ else if(isset($active_profile)  && $active_profile == 3)
 		{
 			get_template_part('template-parts/dashboard/layouts-3/consultations/consultations-detail');
 		}
-		else if($page_type == "consultations-detail2")
-		{
-			get_template_part('template-parts/dashboard/layouts-3/consultations/consultations-detail-2');
-		}
+		
 		else if($page_type == "sessions")
 		{
 			get_template_part('template-parts/dashboard/layouts-3/sessions/sessions');
@@ -455,6 +456,10 @@ else if(isset($active_profile)  && $active_profile == 4)
 		{
 			get_template_part('template-parts/dashboard/layouts-4/services/services');
 		}
+		else if($page_type == "service-detail")
+		{
+			get_template_part('template-parts/dashboard/layouts-4/services/service-detail');
+		}
 		else if($page_type == "consultations")
 		{
 			get_template_part('template-parts/dashboard/layouts-4/consultations/consultations');
@@ -463,10 +468,7 @@ else if(isset($active_profile)  && $active_profile == 4)
 		{
 			get_template_part('template-parts/dashboard/layouts-4/consultations/consultations-detail');
 		}
-		else if($page_type == "consultations-detail2")
-		{
-			get_template_part('template-parts/dashboard/layouts-4/consultations/consultations-detail-2');
-		}
+		
 		else if($page_type == "sessions")
 		{
 			get_template_part('template-parts/dashboard/layouts-4/sessions/sessions');

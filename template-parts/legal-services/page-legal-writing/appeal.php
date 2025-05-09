@@ -123,8 +123,6 @@ foreach ($parent_terms as $parent) {
                     <h5 class="text-center"></h5>
 
                     <div class="row">
-
-
                         <div class="form-group">
                             <label for="roleSelect">هل أنت المدعي أم المدعى عليه؟</label>
                             <?php $case_role_type = get_post_meta($lsid, '_case_role_type', true) ?>
@@ -240,7 +238,7 @@ foreach ($parent_terms as $parent) {
 
                     <?php
                     // جلب قيمة أسباب النقض المحفوظة
-                    $annulment_reasons = get_post_meta($post_id, '_annulment_reasons', true);
+                    $annulment_reasons = get_post_meta($lsid, '_annulment_reasons', true);
                     ?>
 
                     <div class="mb-4">

@@ -11,7 +11,6 @@ $service_type_id  = get_post_meta($service_id, '_service_type', true);
 $service_type     = get_the_title($service_type_id);
 $specialization   = get_post_meta($service_id, '_specialization', true); // التخصص
 $order_date       = get_the_date('d M Y'); // تاريخ الطلب (مثل 27 Apr 2025)
-$offer_statue     = get_post_meta($service_id, '_service_offer_status', true);
 
 // hatem_debug($offer_statue);
 
@@ -35,8 +34,9 @@ $query = new WP_Query($args);
       <!-- Cotent -->
       <div class="col-md-6 order-md-2">
         <!-- Title -->
+
         <h4><i class="bi bi-journals fa-fw me-1"></i><?php echo esc_html__('عروض علي : ', 'khebrat_theme'); ?><?php echo esc_html(get_the_title($service_id)); ?></h4>
-        
+
         <!-- تفاصيل -->
         <ul class="list-group list-group-borderless mb-0">
           <li class="list-group-item"><?php echo esc_html__('طلب رقم : ', 'khebrat_theme'); ?>
@@ -75,8 +75,9 @@ $query = new WP_Query($args);
       $user_name      = exertio_get_username('lawyer', $lid);
       $days           = get_post_meta(get_the_ID(), '_service_execution_time', true);
       $price          = get_post_meta(get_the_ID(), '_service_offer_price', true);
-      $offer_link     = get_permalink($khebrat_theme_options['user_dashboard_page']) . '/?ext=offer-detail&offer_id=' . get_the_ID(); 
-
+      $offer_link     = get_permalink($khebrat_theme_options['user_dashboard_page']) . '/?ext=offer-detail&offer_id=' . get_the_ID();
+      //$offer_statue   = get_post_meta($service_id, '_service_offer_status', true);
+      $offer_statue = get_post_meta(get_the_ID(), '_service_offer_status', true);
 
   ?>
       <!-- Ticket item START -->
@@ -118,7 +119,7 @@ $query = new WP_Query($args);
             <!-- Airport detail -->
             <div class="col-sm-4 col-md-6">
               <p class="mb-0"><?php echo esc_html__('قيمة العرض', 'khebrat_theme'); ?></p>
-              <h6><?php echo esc_html($price); ?> ر.س</h6>
+              <h6><?php khebrat_price_icon(get_the_ID(), '_service_offer_price'); ?></h6>
             </div>
           </div>
           <!-- Ticket item END -->
@@ -128,8 +129,17 @@ $query = new WP_Query($args);
         <div class="card-footer pt-4">
           <ul class="list-inline bg-light rounded-2 d-sm-flex text-center justify-content-sm-between mb-0 px-4 py-2">
             <li class="list-inline-item"><a class="btn btn-success btn-sm" href="<?php echo $offer_link ?>"><?php echo esc_html__('تفاصيل العرض ', 'khebrat_theme'); ?></a></li>
-            <li class="list-inline-item"><a class="btn btn-outline-success btn-sm" href="#"><?php echo esc_html__('قبول العرض', 'khebrat_theme'); ?></a></li>
-            <li class="list-inline-item"><a class="btn btn-success btn-sm" href="<?php echo esc_attr(get_permalink($lid));?>"><?php echo esc_html__('ملف المحامي', 'khebrat_theme'); ?></a></li>
+
+            <?php if (in_array($offer_statue, ['accepted', 'rejected'])): ?>
+
+              <li class="list-inline-item"><?php echo service_offer_status(get_the_ID()); ?></li>
+
+            <?php else: ?>
+
+              <li class="list-inline-item"><a class="btn btn-outline-success btn-sm" href="#"><?php echo esc_html__('قبول العرض', 'khebrat_theme'); ?></a></li>
+
+            <?php endif; ?>
+            <li class="list-inline-item"><a class="btn btn-success btn-sm" href="<?php echo esc_attr(get_permalink($lid)); ?>"><?php echo esc_html__('ملف المحامي', 'khebrat_theme'); ?></a></li>
           </ul>
         </div>
       </div>

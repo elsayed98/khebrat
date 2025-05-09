@@ -98,7 +98,7 @@ if (is_user_logged_in()) {
                                                                     <div class="bg-info text-dark p-2 rounded-3">
                                                                         <small class="text-light d-block">
                                                                             <a href="<?php echo get_the_permalink($message->msg_sender_id); ?>" class="history-username"></a>
-                                                                            22<?php echo exertio_get_username('customer', $message->msg_sender_id, 'badge', 'left'); ?>
+                                                                            <?php echo exertio_get_username('customer', $message->msg_sender_id, 'badge', 'right'); ?>
                                                                         </small>
                                                                         <?php echo esc_html(wp_strip_all_tags($message->message)); ?>
                                                                         <?php
@@ -123,8 +123,8 @@ if (is_user_logged_in()) {
                                                             <!-- رسالة مستلمة -->
                                                             <div class="d-flex align-items-start justify-content-end mb-3">
                                                                 <div class="text-end">
-                                                                    <div class="bg-light text-white p-2 rounded-3">
-                                                                        <small class="text-light d-block"><?php echo exertio_get_username('customer', $message->msg_sender_id, 'badge', 'right'); ?></small>
+                                                                    <div class="bg-light text-span  p-2 rounded-3">
+                                                                        <small class="d-block"><?php echo exertio_get_username('lawyer', $message->msg_sender_id, 'badge', 'left'); ?></small>
                                                                         <?php echo esc_html(wp_strip_all_tags($message->message)); ?>
                                                                         <?php
                                                                         if ($message->attachment_ids > 0) {
@@ -141,7 +141,7 @@ if (is_user_logged_in()) {
                                                                     <small class="text-muted"><?php echo time_ago_function($message->timestamp); ?></small>
                                                                 </div>
                                                                 <div class="avatar avatar-sm ms-2">
-                                                                    <?php echo get_profile_img($message->msg_sender_id, 'customer', 'avatar-img rounded-circle'); ?>
+                                                                    <?php echo get_profile_img($message->msg_sender_id, 'lawyer', 'avatar-img rounded-circle'); ?>
                                                                 </div>
                                                             </div>
 
@@ -178,8 +178,6 @@ if (is_user_logged_in()) {
                                                     </div>
                                                 </div>
 
-
-
                                                 <div class="collapse show" id="collapseComment">
                                                     <div class="d-flex mt-3">
                                                         <textarea class="form-control mb-0" name="history_msg_text" id="" required data-smk-msg="<?php echo esc_attr__('Please provide message to send', 'khebrat_theme'); ?>" placeholder="<?php echo esc_attr__('Type your message here.....', 'khebrat_theme'); ?>"></textarea>
@@ -205,7 +203,7 @@ if (is_user_logged_in()) {
 
 <?php
         } else {
-            get_template_part('template-parts/dashboard/layouts-3/dashboard');
+            echo '123';
         }
     }
 } else {

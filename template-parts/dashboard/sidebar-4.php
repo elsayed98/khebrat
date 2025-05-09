@@ -62,18 +62,16 @@ $alt_id = '';
 
 
 					<li class="nav-item">
-						<a class="nav-link <?php if ($page_name == '') {
-												echo 'active';
-											} ?>" href="<?php echo esc_url(get_the_permalink()); ?>"><i class="bi bi-house-door fa-fw me-1"></i><?php echo esc_html__('لوحة التحكم', 'khebrat_theme'); ?> </a>
+						<a class="nav-link <?php if ($page_name == '') { echo 'active'; } ?>" href="<?php echo esc_url(get_the_permalink()); ?>"><i class="bi bi-house-door fa-fw me-1"></i><?php echo esc_html__('لوحة التحكم', 'khebrat_theme'); ?> </a>
 					</li>
-
 
 					<li class="nav-item">
 						<a class="nav-link <?php if ($page_name == 'services') { echo 'active'; } ?>" href="<?php echo esc_url(get_the_permalink()); ?>?ext=services"><i class="bi bi-person-gear fa-fw me-2"></i><?php echo esc_html__('الخدمات', 'khebrat_theme'); ?></a>
 					</li>
 
-					<li class="nav-item"> <a class="nav-link" href="agent-bookings.html"><i
-								class="bi bi-bookmark-heart fa-fw me-1"></i>الاستشارات</a> </li>
+					<li class="nav-item">
+						<a class="nav-link <?php if ($page_name == 'consultations') { echo 'active'; } ?> " href="<?php echo esc_url(get_the_permalink()); ?>?ext=consultations"><i class="bi bi-bookmark-heart fa-fw me-1"></i><?php echo esc_html__('الاستشارات ', 'khebrat_theme'); ?> </a>
+					</li>
 					<li class="nav-item"> <a class="nav-link" href="agent-bookings.html"><i
 								class="bi bi-bookmark-heart fa-fw me-1"></i>الجلسات</a> </li>
 
@@ -86,11 +84,8 @@ $alt_id = '';
 					<li class="nav-item"> <a class="nav-link" href="agent-reviews.html"><i
 								class="bi bi-star fa-fw me-1"></i>Reviews</a></li>
 
-
 					<li class="nav-item">
-						<a class="nav-link <?php if ($page_name == 'settings') {
-												echo 'active';
-											} ?> " href="<?php echo esc_url(get_the_permalink()); ?>?ext=settings"><i class="bi bi-gear fa-fw me-1"></i><?php echo esc_html__('اعدادات ', 'khebrat_theme'); ?> </a>
+						<a class="nav-link <?php if ($page_name == 'settings') { echo 'active'; } ?> " href="<?php echo esc_url(get_the_permalink()); ?>?ext=settings"><i class="bi bi-gear fa-fw me-1"></i><?php echo esc_html__('اعدادات ', 'khebrat_theme'); ?> </a>
 					</li>
 
 					<li class="nav-item dropdown">

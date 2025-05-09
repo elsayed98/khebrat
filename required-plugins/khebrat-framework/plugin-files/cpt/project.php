@@ -998,7 +998,7 @@ function is_edit_page($new_edit = null){
         
         
         <div class="custom-row">
-            <div class="col-3"><label><?php echo __( "Project Label", 'exertio_framework' ); ?></label> </div>
+            <div class="col-3"><label><?php echo __( "Project Label", 'exertio_framework' ); ?></label> </div> 
             <div class="col-9">
             <ul>
             <?php

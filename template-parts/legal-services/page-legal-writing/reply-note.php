@@ -94,7 +94,7 @@ foreach ($parent_terms as $parent) {
 <div class="container mt-5">
     <div class="card shadow">
         <div class="card-body content-wrapper">
-            <h3 class="text-center mb-4"><?php echo get_the_title($khebrat_theme_options['page_legal_writing']); ?> - صحيفة الدعوى</h3>
+            <h3 class="text-center mb-4"><?php echo get_the_title($khebrat_theme_options['page_legal_writing']); ?> - مذكرة رد على الدعوى</h3>
             <form id="legal_services_form">
                 <!-- الصفحة 1: اختيار التصنيف الأب -->
                 <div class="step active">
@@ -111,7 +111,7 @@ foreach ($parent_terms as $parent) {
                                         <p class="small text-muted"><?php echo esc_html($parent->description); ?></p>
                                     </div>
                                 </label>
-                            </div>
+                            </div> 
                         <?php endforeach; ?>
                     </div>
                 </div>
@@ -248,6 +248,7 @@ foreach ($parent_terms as $parent) {
                         <button type="button" class="btn btn-secondary prevBtn">السابق</button>
                         <button type="button" class="btn btn-success" id="create_legal_services_btn" data-post-id="<?php echo esc_attr($lsid) ?>">إرسال</button>
                         <input type="hidden" name="service_type" value="<?php echo $khebrat_theme_options['page_legal_writing']; ?>" />
+                        <input type="hidden" name="service_type_writing" value="reply_note" />
 
                         <input type="hidden" id="create_legal_services_nonce" value="<?php echo wp_create_nonce('fl_create_legal_services_secure'); ?>" />
 

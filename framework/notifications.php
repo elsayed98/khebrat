@@ -64,6 +64,22 @@ if (! function_exists('khebrat_get_notifications')) {
                         $message = __(' أرسل عرضًا على ', 'khebrat_theme') . '<span>' . get_the_title($results->post_id) . '</span>';
                     }
 
+                    elseif ($results->n_type == 'start_consul') {
+                        $redirect_url = $dashboard_page . '?ext=consultations-detail&cid=' . $results->post_id;
+                        $title = $n_sender_name;
+                        $message = __(' تم بدا الاستشارة ', 'khebrat_theme') . '<span>' . get_the_title($results->post_id) . '</span>';
+                    }
+                    elseif ($results->n_type == 'completed_consul') {
+                        $redirect_url = $dashboard_page . '?ext=consultations-detail&cid=' . $results->post_id;
+                        $title = $n_sender_name;
+                        $message = __(' تم انهاء الاستشارة ', 'khebrat_theme') . '<span>' . get_the_title($results->post_id) . '</span>';
+                    }
+                    elseif ($results->n_type == 'completed_service') {
+                        $redirect_url = $dashboard_page . '?ext=service-detail&lsid=' . $results->post_id;
+                        $title = $n_sender_name;
+                        $message = __(' تم تعليم الطلب كمكتمل ', 'khebrat_theme') . '<span>' . get_the_title($results->post_id) . '</span>';
+                    }
+
 					elseif ($results->n_type == 'accept_offer') {
 						$redirect_url = $dashboard_page . '?ext=services';
                         //$redirect_url = $dashboard_page . '?ext=service-offers&sfid=' . $results->post_id;
