@@ -47,16 +47,9 @@ $query = new WP_Query($args);
 						</ul>
 					</div>
 
-
-
-
-
-
-
 					<!-- Card body START -->
 					<div id="services-list" class="card-body vstack gap-3">
 						<!-- Listing item START -->
-
 						<?php
 						if ($query->have_posts()) :
 							while ($query->have_posts()) : $query->the_post();
@@ -70,82 +63,66 @@ $query = new WP_Query($args);
 
 
 						?>
-								<div class="list-group-item">
-									<h5 class="mb-1"><?php the_title(); ?></h5>
-									<p class="mb-0">المنشور الأب:
-										<?php if ($parent_id) : ?>
-											<a href="<?php echo esc_url($parent_link); ?>"><?php echo esc_html($parent_title); ?></a>
-										<?php else : ?>
-											<span><?php echo esc_html($parent_title); ?></span>
-										<?php endif; ?>
-									</p>
-								</div>
-
-
 								<div class="card border p-2">
-							<div class="row g-4">
-								<!-- Card body -->
-								<div class="col-md-9 col-lg-12">
-									<div class="card-body position-relative d-flex flex-column p-0 h-100">
+									<div class="row g-4">
+										<!-- Card body -->
+										<div class="col-md-9 col-lg-12">
+											<div class="card-body position-relative d-flex flex-column p-0 h-100">
 
-										<!-- Buttons -->
-										<div class="list-inline-item dropdown position-absolute top-0 end-0">
-											<small><?php echo esc_html__('طلب رقم : ', 'khebrat_theme'); ?>#<?php echo esc_html($parent_id); ?></small>
+												<!-- Buttons -->
+												<div class="list-inline-item dropdown position-absolute top-0 end-0">
+													<small><?php echo esc_html__('طلب رقم : ', 'khebrat_theme'); ?>#<?php echo esc_html($parent_id); ?></small>
 
-										</div>
+												</div>
 
-										<!-- Title -->
-										<h6 class="card-title mb-0 me-8"><?php echo esc_html__(' عرض علي : ', 'khebrat_theme'); ?><?php echo esc_html($parent_title); ?></h6>
+												<!-- Title -->
+												<h6 class="card-title mb-0 me-8"><?php echo esc_html__(' عرض علي : ', 'khebrat_theme'); ?><?php echo esc_html($parent_title); ?></h6>
 
-										<div class="d-flex align-items-center">
-											<span class="mb-0 me-1"><?php echo esc_html__('تاريخ العرض : ', 'khebrat_theme'); ?></span>
-											<span class="text-span mb-0 me-1"><?php echo esc_html($offer_date); ?></span>
-										</div>
-										<div class="d-flex align-items-center">
-											<span class="mb-0 me-1"><?php echo esc_html__('نوع الخدمة : ', 'khebrat_theme'); ?></span>
-											<span class="text-span mb-0 me-1"><?php echo esc_html($service_type); ?></span>
-										</div>
-										<div class="d-flex align-items-center">
-											<span class="mb-0 me-1"><?php echo esc_html__('التخصص : ', 'khebrat_theme'); ?></span>
-											<?php
-                                                $terms = wp_get_object_terms($parent_id, 'legal_category');
-                                                if (!empty($terms) && !is_wp_error($terms)) {
-                                                    $term_names = wp_list_pluck($terms, 'name');
-                                                    echo '<span class="text-span mb-0 me-1">' . implode('، ', $term_names) . '</span>';
-                                                } else {
-                                                    echo '<span class="text-span mb-0 me-1">' . esc_html('غير محدد') . '</span>';
-                                                }
-                                                ?>
-										</div>
+												<div class="d-flex align-items-center">
+													<span class="mb-0 me-1"><?php echo esc_html__('تاريخ العرض : ', 'khebrat_theme'); ?></span>
+													<span class="text-span mb-0 me-1"><?php echo esc_html($offer_date); ?></span>
+												</div>
+												<div class="d-flex align-items-center">
+													<span class="mb-0 me-1"><?php echo esc_html__('نوع الخدمة : ', 'khebrat_theme'); ?></span>
+													<span class="text-span mb-0 me-1"><?php echo esc_html($service_type); ?></span>
+												</div>
+												<div class="d-flex align-items-center">
+													<span class="mb-0 me-1"><?php echo esc_html__('التخصص : ', 'khebrat_theme'); ?></span>
+													<?php
+													$terms = wp_get_object_terms($parent_id, 'legal_category');
+													if (!empty($terms) && !is_wp_error($terms)) {
+														$term_names = wp_list_pluck($terms, 'name');
+														echo '<span class="text-span mb-0 me-1">' . implode('، ', $term_names) . '</span>';
+													} else {
+														echo '<span class="text-span mb-0 me-1">' . esc_html('غير محدد') . '</span>';
+													}
+													?>
+												</div>
 
-										<div class="d-flex align-items-center">
-											<span class="mb-0 me-1"><?php echo esc_html__('قيمة العرض : ', 'khebrat_theme'); ?></span>
-											<span class="text-span mb-0 me-1"><?php echo esc_html($offer_price); ?></span>
-											<i class="icon-Saudi_Riyal_Symbol-2"></i>
-										</div>
+												<div class="d-flex align-items-center">
+													<span class="mb-0 me-1"><?php echo esc_html__('قيمة العرض : ', 'khebrat_theme'); ?></span>
+													<span class="text-span mb-0 me-1"><?php echo esc_html($offer_price); ?></span>
+													<i class="icon-Saudi_Riyal_Symbol-2"></i>
+												</div>
 
 
-										<!-- Price and Button -->
-										<div class="d-sm-flex justify-content-sm-between align-items-center mt-3 mt-md-auto">
-											<!-- Button -->
-											<div class="d-flex align-items-center">
-												<h5 class="fw-bold mb-0 me-1">$1586</h5>
-												<span class="mb-0 me-2">/day</span>
-											</div>
-											<!-- Price -->
-											<div class="hstack gap-2 mt-3 mt-sm-0">
-												<a href="#" class="btn btn-sm btn-success mb-0"><?php echo esc_html__('مشاهدة العروض', 'khebrat_theme'); ?></a>
-												<a href="<?php echo esc_url($parent_link); ?>" class="btn btn-sm btn-outline-success mb-0"><?php echo esc_html__('تفاصيل الطلب', 'khebrat_theme'); ?></a>
+												<!-- Price and Button -->
+												<div class="d-sm-flex justify-content-sm-between align-items-center mt-3 mt-md-auto">
+													<!-- Button -->
+													<div class="d-flex align-items-center">
+														<h5 class="fw-bold mb-0 me-1">$1586</h5>
+														<span class="mb-0 me-2">/day</span>
+													</div>
+													<!-- Price -->
+													<div class="hstack gap-2 mt-3 mt-sm-0">
+														<a href="#" class="btn btn-sm btn-success mb-0"><?php echo esc_html__('مشاهدة العروض', 'khebrat_theme'); ?></a>
+														<a href="<?php echo esc_url($parent_link); ?>" class="btn btn-sm btn-outline-success mb-0"><?php echo esc_html__('تفاصيل الطلب', 'khebrat_theme'); ?></a>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-
-
-
-						
 						<?php
 							endwhile;
 							wp_reset_postdata();
@@ -153,9 +130,6 @@ $query = new WP_Query($args);
 							echo '<div class="alert alert-info">لا توجد عروض حالياً.</div>';
 						endif;
 						?>
-
-						
-
 						<!-- Listing item END -->
 						<p class="text-center">جارٍ التحميل...</p>
 
@@ -164,8 +138,10 @@ $query = new WP_Query($args);
 							<button id="load-more" class="btn btn-primary d-none" data-page="1">تحميل المزيد</button>
 						</div>
 					</div>
+					
 					<!-- Card body END -->
 				</div>
+				
 			</div>
 		</div>
 		<!-- Listing table END -->

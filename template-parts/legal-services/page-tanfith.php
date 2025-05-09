@@ -108,7 +108,6 @@ foreach ($parent_terms as $parent) {
                     <h5 class="text-center"></h5>
 
                     <div class="row">
-
                         <!-- حقول المدعي -->
                         <div class="form-group">
                             <label for="plaintiffRole">صفتك كمدعي:</label>

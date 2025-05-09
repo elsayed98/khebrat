@@ -15,7 +15,6 @@ $current_user_id = get_current_user_id();
 
 
 
-
 if (in_array('khebrat-framework/index.php', apply_filters('active_plugins', get_option('active_plugins')))) {
 
     if (is_user_logged_in()) {

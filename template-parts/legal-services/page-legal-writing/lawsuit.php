@@ -251,6 +251,7 @@ foreach ($parent_terms as $parent) {
                         <button type="button" class="btn btn-secondary prevBtn">السابق</button>
                         <button type="button" class="btn btn-success" id="create_legal_services_btn" data-post-id="<?php echo esc_attr($lsid) ?>">إرسال</button>
                         <input type="hidden" name="service_type" value="<?php echo $khebrat_theme_options['page_legal_writing']; ?>" />
+                        <input type="hidden" name="service_type_writing" value="lawsuit" />
 
                         <input type="hidden" id="create_legal_services_nonce" value="<?php echo wp_create_nonce('fl_create_legal_services_secure'); ?>" />
 

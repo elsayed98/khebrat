@@ -139,13 +139,13 @@ foreach ($child_offers as $offer) {
                             <!-- مدة التنفيذ -->
                             <div class="alert alert-info d-flex justify-content-between align-items-center mb-2">
                                 <span class="h6 fw-normal mb-0"><i class="bi bi-clock fa-fw me-2"></i><?php echo esc_html__('مدة التنفيذ : ', 'khebrat_theme'); ?></span>
-                                <span> 3 أيام</span>
+                                <span><?php echo get_post_meta($offer_id, '_service_execution_time', true); ?> ايام </span>
                             </div>
 
                             <!-- قيمة العرض -->
                             <div class="alert alert-info d-flex justify-content-between align-items-center">
                                 <span class="h6 fw-normal mb-0"><i class="bi bi-cash-coin fa-fw me-2"></i><?php echo esc_html__('قيمة العرض : ', 'khebrat_theme'); ?></span>
-                                <span> 1500.00 ر.س</span>
+                                <span><?php khebrat_price_icon($offer_id, '_service_offer_price'); ?></span>
                             </div>
                         </div>
 
@@ -161,7 +161,7 @@ foreach ($child_offers as $offer) {
                             <?php endif; ?>
                         </div>
 
-                        <?php if ($status == 'active'): ?>
+                        <?php if ($status == 'pending'): ?>
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                 <button class="btn btn-success me-md-2 btn-offer-action"
                                     data-id="<?php echo $offer_id; ?>"
