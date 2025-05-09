@@ -543,7 +543,7 @@ if ($saved_child_term) {
     });
 </script>
 
-<script>
+<!-- <script>
     // document.addEventListener("DOMContentLoaded", function() {
     //     let steps = document.querySelectorAll(".step");
     //     let currentStep = 0;
@@ -578,4 +578,4 @@ if ($saved_child_term) {
 
 
     });
-</script>
+</script> -->

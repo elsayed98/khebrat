@@ -29,7 +29,7 @@ $child_offers = get_posts([
 
 
 $service_type_id = get_post_meta($service_id, '_service_type', true);
-$service_type = get_the_title($service_type_id);
+$service_type       = get_the_title($service_type_id);
 $specialization = get_post_meta($service_id, '_specialization', true); // التخصص
 // التحقق من وجود المنشور
 
