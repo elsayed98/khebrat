@@ -180,7 +180,7 @@ foreach ($parent_terms as $parent) {
 
                     <div class="form-group">
                         <label for="requestTitle">عنوان الطلب</label>
-                        <input type="text" class="form-control" id="requestTitle" name="request_title" value="<?php echo get_post_meta($lsid, '_request_title', true); ?>" placeholder="يرجى كتابة عنوان الطلب بشكل واضح ومختصر" required></input>
+                        <input type="text" class="form-control" id="requestTitle" data-smk-msg="يرجي ادخال عنوان الطلب" name="request_title" value="<?php echo get_post_meta($lsid, '_request_title', true); ?>" placeholder="يرجى كتابة عنوان الطلب بشكل واضح ومختصر" required></input>
 
                     </div>
 
@@ -213,7 +213,7 @@ foreach ($parent_terms as $parent) {
                     <!-- وصف العلامة التجارية -->
                     <div class="mb-4">
                         <label class="form-label fw-bold">وصف العلامة التجارية</label>
-                        <textarea name="trademark_description" rows="4" class="form-control"><?php echo esc_textarea($trademark_description); ?></textarea>
+                        <textarea name="trademark_description" required data-smk-msg="وصف العلامة التجارية" rows="4" class="form-control"><?php echo esc_textarea($trademark_description); ?></textarea>
                     </div>
 
 

@@ -400,13 +400,13 @@ foreach ($parent_terms as $parent) {
 
                     <div class="form-group">
                         <label for="requestTitle">عنوان الطلب</label>
-                        <input type="text" class="form-control" id="requestTitle" name="request_title" value="<?php echo get_post_meta($lsid, '_request_title', true); ?>" placeholder="يرجى كتابة عنوان الطلب بشكل واضح ومختصر" required></input>
+                        <input type="text" class="form-control" id="requestTitle" name="request_title" data-smk-msg="يرجي ادخال عنوان الطلب" value="<?php echo get_post_meta($lsid, '_request_title', true); ?>" placeholder="يرجى كتابة عنوان الطلب بشكل واضح ومختصر" required></input>
 
                     </div>
 
                     <div class="form-group">
                         <label for="caseSubject">موضوع الخدمة</label>
-                        <textarea class="form-control" id="caseSubject" name="case_subject" rows="3" placeholder="يرجى كتابة تفاصيل الموضوع بشكل واضح ومختصر" required><?= esc_textarea(get_post_meta($lsid, '_case_subject', true)); ?></textarea>
+                        <textarea class="form-control" id="caseSubject" name="case_subject" data-smk-msg="يرجي كتابة تفاصيل الموضوع" rows="3" placeholder="يرجى كتابة تفاصيل الموضوع بشكل واضح ومختصر" required><?= esc_textarea(get_post_meta($lsid, '_case_subject', true)); ?></textarea>
                     </div>
 
                     <div class="d-flex justify-content-between mt-4">

@@ -189,7 +189,7 @@ foreach ($parent_terms as $parent) {
 
                     <div class="form-group">
                         <label for="requestTitle">عنوان الطلب</label>
-                        <input type="text" class="form-control" id="requestTitle" name="request_title" value="<?php echo get_post_meta($lsid, '_request_title', true); ?>" placeholder="يرجى كتابة عنوان الطلب بشكل واضح ومختصر" required></input>
+                        <input type="text" class="form-control" id="requestTitle" name="request_title" data-smk-msg="يرجي ادخال عنوان الطلب" value="<?php echo get_post_meta($lsid, '_request_title', true); ?>" placeholder="يرجى كتابة عنوان الطلب بشكل واضح ومختصر" required></input>
 
                     </div>
 

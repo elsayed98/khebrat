@@ -108,19 +108,19 @@ foreach ($parent_terms as $parent) {
 
                     <div class="form-group">
                         <label for="requestTitle">عنوان الطلب</label>
-                        <input type="text" class="form-control" id="requestTitle" name="request_title" value="<?php echo get_post_meta($lsid, '_request_title', true); ?>" placeholder="يرجى كتابة عنوان الطلب بشكل واضح ومختصر" required></input>
+                        <input type="text" class="form-control" id="requestTitle" data-smk-msg="عنوان الطلب" name="request_title" value="<?php echo get_post_meta($lsid, '_request_title', true); ?>" placeholder="يرجى كتابة عنوان الطلب بشكل واضح ومختصر" required></input>
                     </div>
 
                     <!-- التفاصيل -->
                     <div class="mb-3">
                         <label class="form-label fw-bold">التفاصيل</label>
-                        <textarea name="details" rows="4" class="form-control" placeholder="يرجى كتابة تفاصيل الموضوع بشكل واضح ومختصر" required><?php echo esc_textarea($details); ?></textarea>
+                        <textarea name="details" rows="4" class="form-control" required data-smk-msg="التفاصيل" placeholder="يرجى كتابة تفاصيل الموضوع بشكل واضح ومختصر" required><?php echo esc_textarea($details); ?></textarea>
                     </div>
 
                     <!-- الخدمة المطلوب تنفيذها -->
                     <div class="mb-3">
                         <label class="form-label fw-bold">الخدمة المطلوب تنفيذها</label>
-                        <textarea name="requested_service" rows="4" class="form-control" placeholder="يرجى كتابة وتحديد المطلوب بشكل واضح ومختصر ويفضل على شكل نقاط" required><?php echo esc_textarea($requested_service); ?></textarea>
+                        <textarea name="requested_service" rows="4" class="form-control" data-smk-msg="الخدمة المطلوب تنفيذها" placeholder="يرجى كتابة وتحديد المطلوب بشكل واضح ومختصر ويفضل على شكل نقاط" required><?php echo esc_textarea($requested_service); ?></textarea>
                     </div>
 
                     <div class="d-flex justify-content-between mt-4">

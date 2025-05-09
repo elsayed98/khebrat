@@ -133,7 +133,7 @@ if ($saved_child_term) {
 
                     <div class="form-group">
                         <label for="requestTitle">عنوان الطلب</label>
-                        <input type="text" class="form-control" id="requestTitle" name="request_title" value="<?php echo get_post_meta($lsid, '_request_title', true); ?>" placeholder="يرجى كتابة عنوان الطلب بشكل واضح ومختصر" required></input>
+                        <input type="text" class="form-control" id="requestTitle" name="request_title" data-smk-msg="يرجي ادخال عنوان الطلب" value="<?php echo get_post_meta($lsid, '_request_title', true); ?>" placeholder="يرجى كتابة عنوان الطلب بشكل واضح ومختصر" required></input>
                     </div>
 
                     <?php
@@ -150,7 +150,7 @@ if ($saved_child_term) {
                     <!-- اسم الدائرة أو الجهة الحكومية -->
                     <div class="mb-3">
                         <label class="form-label fw-bold">اسم الدائرة أو الجهة الحكومية</label>
-                        <input type="text" name="gov_name" class="form-control" value="<?php echo esc_attr($gov_name); ?>">
+                        <input type="text" name="gov_name" required data-smk-msg="الدائرة او الجهة الحكومية" class="form-control" value="<?php echo esc_attr($gov_name); ?>">
                     </div>
 
                     <!-- الموقع -->
@@ -190,7 +190,7 @@ if ($saved_child_term) {
                     <!-- سبب المراجعة والمطلوب تنفيذه -->
                     <div class="mb-3">
                         <label class="form-label fw-bold">سبب المراجعة والمطلوب تنفيذه</label>
-                        <textarea name="case_subject" rows="4" class="form-control"><?php echo esc_textarea($review_reason); ?></textarea>
+                        <textarea name="case_subject" required data-smk-msg="سبب المراجعة ؟" rows="4" class="form-control"><?php echo esc_textarea($review_reason); ?></textarea>
                     </div>
 
                     <!-- موعد الجلسة -->
