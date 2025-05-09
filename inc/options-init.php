@@ -8769,7 +8769,7 @@ Redux::setSection($opt_name, array(
             'title' => 'صفحة - خدمات أخرى',
             'data'  => 'pages',
         ),
-
+ 
 
 		array(
             'id'    => 'form_legal_consultation',
