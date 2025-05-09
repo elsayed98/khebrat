@@ -321,12 +321,12 @@ if ($saved_child_term) {
 
                     <div class="form-group">
                         <label for="caseSubject">موضوع القضية</label>
-                        <textarea class="form-control" id="caseSubject" name="case_subject" rows="3" placeholder="يرجى كتابة تفاصيل الموضوع بشكل واضح ومختصر" required><?= esc_textarea(get_post_meta($lsid, '_case_subject', true)); ?></textarea>
+                        <textarea class="form-control" id="caseSubject" data-smk-msg="يرجي كتابة  تفاصيل الموضوع" name="case_subject" rows="3" placeholder="يرجى كتابة تفاصيل الموضوع بشكل واضح ومختصر" required><?= esc_textarea(get_post_meta($lsid, '_case_subject', true)); ?></textarea>
                     </div>
 
                     <div class="form-group">
                         <label for="questions"><?php echo esc_html__('المطلوب من المحامي عمله في هذه الجلسة', 'khebrat_theme'); ?></label>
-                        <textarea class="form-control" id="questions" name="case_questions" rows="3" placeholder="يرجى كتابة تفاصيل الموضوع بشكل واضح ومختصر" required><?= esc_textarea(get_post_meta($lsid, '_case_questions', true)); ?></textarea>
+                        <textarea class="form-control"  data-smk-msg="يرجي كتابة  تفاصيل الموضوع" id="questions" name="case_questions" rows="3" placeholder="يرجى كتابة تفاصيل الموضوع بشكل واضح ومختصر" required><?= esc_textarea(get_post_meta($lsid, '_case_questions', true)); ?></textarea>
                     </div>
 
                     <div class="d-flex justify-content-between mt-4">
@@ -543,7 +543,7 @@ if ($saved_child_term) {
     });
 </script>
 
-<script>
+<!-- <script>
     // document.addEventListener("DOMContentLoaded", function() {
     //     let steps = document.querySelectorAll(".step");
     //     let currentStep = 0;
@@ -578,4 +578,4 @@ if ($saved_child_term) {
 
 
     });
-</script>
+</script> -->

@@ -171,13 +171,13 @@ foreach ($parent_terms as $parent) {
 
                     <div class="form-group">
                         <label for="requestTitle">عنوان الطلب</label>
-                        <input type="text" class="form-control" id="requestTitle" name="request_title" value="<?php echo get_post_meta($lsid, '_request_title', true); ?>" placeholder="يرجى كتابة عنوان الطلب بشكل واضح ومختصر" required></input>
+                        <input type="text" class="form-control" id="requestTitle" data-smk-msg="يرجي كتابة عنوان الطلب"  name="request_title" value="<?php echo get_post_meta($lsid, '_request_title', true); ?>" placeholder="يرجى كتابة عنوان الطلب بشكل واضح ومختصر" required></input>
 
                     </div>
 
                     <div class="form-group">
                         <label for="caseSubject">موضوع الدعوة</label>
-                        <textarea class="form-control" id="caseSubject" name="case_subject" rows="3" placeholder="يرجى كتابة تفاصيل الموضوع بشكل واضح ومختصر" required><?= esc_textarea(get_post_meta($lsid, '_case_subject', true)); ?></textarea>
+                        <textarea class="form-control" id="caseSubject" data-smk-msg="يرجي كتابة موضوع الدعوة" name="case_subject" rows="3" placeholder="يرجى كتابة تفاصيل الموضوع بشكل واضح ومختصر" required><?= esc_textarea(get_post_meta($lsid, '_case_subject', true)); ?></textarea>
                     </div>
 
                     <?php
@@ -187,13 +187,13 @@ foreach ($parent_terms as $parent) {
                     <!-- طلباتك كمدعي -->
                     <div class="mb-3">
                         <label class="form-label fw-bold">طلباتك كمدعي</label>
-                        <textarea name="claim_requests" rows="4" class="form-control" required placeholder="يرجى كتابة وتحديد الطلبات بشكل واضح ومختصر ويفضل على شكل نقاط حتى يتمكن المحامي أو المحامية من فهم موقفك القانوني"><?php echo esc_textarea($claim_requests); ?></textarea>
+                        <textarea name="claim_requests" rows="4" class="form-control" data-smk-msg="يرجي كتابة طلباتك كمدعي" required placeholder="يرجى كتابة وتحديد الطلبات بشكل واضح ومختصر ويفضل على شكل نقاط حتى يتمكن المحامي أو المحامية من فهم موقفك القانوني"><?php echo esc_textarea($claim_requests); ?></textarea>
                     </div>
 
                     <!-- الاسانيد او الاثباتات -->
                     <div class="mb-3">
                         <label class="form-label fw-bold">الاسانيد او الاثباتات</label>
-                        <textarea name="legal_references" rows="4" class="form-control" required placeholder="ما يستند عليه من نصوص شرعية أو نظامية أو أسباب مادية أو قانونية"><?php echo esc_textarea($legal_references); ?></textarea>
+                        <textarea name="legal_references" rows="4" class="form-control" data-smk-msg="الاسانيد او الاثباتات" required placeholder="ما يستند عليه من نصوص شرعية أو نظامية أو أسباب مادية أو قانونية"><?php echo esc_textarea($legal_references); ?></textarea>
                     </div>
 
                     <div class="d-flex justify-content-between mt-4">

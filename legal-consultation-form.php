@@ -133,7 +133,7 @@ foreach ($parent_terms as $parent) {
 
                     <div class="form-group">
                         <label for="caseSubject">تفاصيل الاستشارة</label>
-                        <textarea class="form-control" id="caseSubject" name="case_subject" rows="3" placeholder="يرجى كتابة تفاصيل الاستشارة باختصار ووضوح والاسئلة التي ترغب بالحصول على اجاباتها من المحامي" required><?= esc_textarea(get_post_meta($lcid, '_case_subject', true)); ?></textarea>
+                        <textarea class="form-control" id="caseSubject" name="case_subject" rows="3" data-smk-msg="حضور جلسات" placeholder="يرجى كتابة تفاصيل الاستشارة باختصار ووضوح والاسئلة التي ترغب بالحصول على اجاباتها من المحامي" required><?= esc_textarea(get_post_meta($lcid, '_case_subject', true)); ?></textarea>
                     </div>
 
 

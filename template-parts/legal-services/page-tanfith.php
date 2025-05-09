@@ -196,7 +196,7 @@ foreach ($parent_terms as $parent) {
 
                     <div class="form-group">
                         <label for="caseSubject"><?php echo esc_html__('موضوع السند التفيذي', 'khebrat_theme'); ?></label>
-                        <textarea class="form-control" id="caseSubject" name="case_subject" rows="3" placeholder="يرجى كتابة تفاصيل الموضوع بشكل واضح ومختصر" required><?= esc_textarea(get_post_meta($lsid, '_case_subject', true)); ?></textarea>
+                        <textarea class="form-control" id="caseSubject" name="case_subject" rows="3" data-smk-msg="يرجي ادخال موضوع القضية" placeholder="يرجى كتابة تفاصيل الموضوع بشكل واضح ومختصر" required><?= esc_textarea(get_post_meta($lsid, '_case_subject', true)); ?></textarea>
                     </div>
 
                     <div class="d-flex justify-content-between mt-4">
